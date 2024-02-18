@@ -1,0 +1,7 @@
+{
+  "bracketSameLine": false,
+  "htmlWhitespaceSensitivity": "css",
+  "singleAttributePerLine": true,
+  "bracketSpacing": true,
+  "proseWrap": "always"
+}

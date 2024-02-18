@@ -1,4 +1,15 @@
 import { Header } from "@/components/header";
+import { Loader } from "@/components/loader";
+import {
+  AlertDialog,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
@@ -35,7 +46,7 @@ export const Home: React.FC = () => {
     avatar: "https://avatars.githubusercontent.com/u/41171735?v=4",
     email: "vncssnts31@gmail.com",
     doc: "CRM/PB 1234",
-    status: "WAITING",
+    status: "OFF",
   };
 
   const [users, setUsers] = useState<Provider[]>([]);
@@ -61,11 +72,7 @@ export const Home: React.FC = () => {
           id="body-content-requester"
           className="w-full flex flex-col justify-end items-end space-y-6 max-w-screen-xl px-4 lg:px-0"
         >
-          <Button className="h-10">
-            <p className="font-sans font-medium text-sm">
-              Entrar na fila de espera
-            </p>
-          </Button>
+          <AlertInQueue />
           <div
             id="list-providers"
             className="w-full space-y-4 overflow-hidden"
@@ -252,5 +259,36 @@ const StatusTag: React.FC<StatusProps> = ({ status, className, ...rest }) => {
         {getLabelByStatus(status)}
       </p>
     </div>
+  );
+};
+
+const AlertInQueue: React.FC = () => {
+  return (
+    <AlertDialog>
+      <AlertDialogTrigger>
+        <Button className="h-10">
+          <p className="font-sans font-medium text-sm">
+            Entrar na fila de espera
+          </p>
+        </Button>
+      </AlertDialogTrigger>
+      <AlertDialogContent>
+        <AlertDialogHeader>
+          <AlertDialogTitle>Aguardando consultor</AlertDialogTitle>
+          <AlertDialogDescription>
+            Você está na fila de espera, assim que um consultor estiver
+            disponível você será direcionado para uma conferência.
+          </AlertDialogDescription>
+        </AlertDialogHeader>
+        <Loader />
+        <AlertDialogFooter>
+          <AlertDialogCancel className="bg-destructive hover:bg-destructive/90">
+            <p className="font-sans font-medium text-sm text-white">
+              Sair da fila
+            </p>
+          </AlertDialogCancel>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
   );
 };

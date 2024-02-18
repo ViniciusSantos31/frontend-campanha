@@ -24,7 +24,7 @@ export const Header: React.FC<HeaderProps> = ({ className, ...rest }) => {
   return (
     <header
       className={cn(
-        "w-full flex items-center justify-center py-2.5 px-2 border-b border-slate-300 sm:px-6 md:px-12",
+        "w-full flex items-center justify-center py-2.5 px-2 border-b border-slate-300 sm:px-6 md:px-12 dark:border-slate-700",
         className
       )}
       {...rest}

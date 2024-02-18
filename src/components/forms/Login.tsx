@@ -1,13 +1,25 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 
 export const LoginForm: React.FC = () => {
+  const navigate = useNavigate();
+
+  const navigateToHome = () => {
+    navigate("/", {
+      preventScrollReset: true,
+      replace: true,
+      unstable_viewTransition: true,
+      relative: "path",
+    });
+  };
+
   return (
-    <div
+    <form
       id="form-signup"
       className="w-full flex flex-col items-start           justify-center p-6 border rounded-md space-y-8 md:w-1/2 lg:w-1/3 bg-background xl:max-w-lg animate-slide-right"
+      onSubmit={navigateToHome}
     >
       <span className="text-2xl font-semibold">Entrar</span>
       <div
@@ -42,8 +54,8 @@ export const LoginForm: React.FC = () => {
         >
           Cadastre-se
         </Link>
-        <Button>Entrar</Button>
+        <Button type="submit">Entrar</Button>
       </footer>
-    </div>
+    </form>
   );
 };

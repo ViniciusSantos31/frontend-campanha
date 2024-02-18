@@ -1,14 +1,20 @@
 import { ProconLogo } from "@/assets/procon-logo";
+import { useTheme } from "@/hooks/useTheme";
 import { cn } from "@/lib/utils";
-import { HelpCircle, LogOutIcon, User } from "lucide-react";
+import { HelpCircle, LogOutIcon, Monitor, Moon, Sun, User } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import {
   DropdownMenu,
+  DropdownMenuCheckboxItem,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
+  DropdownMenuPortal,
   DropdownMenuSeparator,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
 
@@ -38,7 +44,7 @@ const AvatarBagde: React.FC = () => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <div className="w-auto gap-3 flex items-center p-2 rounded-md cursor-pointer hover:bg-slate-50">
+        <div className="w-auto gap-3 flex items-center p-2 rounded-md cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-800">
           <div className="text-right hidden sm:block">
             <p className="text-sm font-sans font-semibold">Vinicius Silva</p>
             <p className="text-xs font-sans font-medium text-slate-400">
@@ -59,6 +65,17 @@ const AvatarBagde: React.FC = () => {
 };
 
 const DropdownContent: React.FC = () => {
+  const { theme, setTheme } = useTheme();
+
+  const getIconTheme = () => {
+    if (theme === "dark") {
+      return <Moon size={16} />;
+    } else if (theme === "system") {
+      return <Monitor size={16} />;
+    }
+    return <Sun size={16} />;
+  };
+
   return (
     <>
       <DropdownMenuLabel className="mr-8">
@@ -69,6 +86,37 @@ const DropdownContent: React.FC = () => {
         <User size={16} />
         Editar perfil
       </DropdownMenuItem>
+      <DropdownMenuSub>
+        <DropdownMenuSubTrigger>
+          <div className="flex items-center gap-2">
+            {getIconTheme()}
+            <p>Tema</p>
+          </div>
+        </DropdownMenuSubTrigger>
+        <DropdownMenuPortal>
+          <DropdownMenuSubContent>
+            <DropdownMenuCheckboxItem
+              checked={theme === "system"}
+              onClick={() => setTheme("system")}
+            >
+              Sistema
+            </DropdownMenuCheckboxItem>
+            <DropdownMenuCheckboxItem
+              checked={theme === "light"}
+              onClick={() => setTheme("light")}
+            >
+              Claro
+            </DropdownMenuCheckboxItem>
+            <DropdownMenuCheckboxItem
+              checked={theme === "dark"}
+              onClick={() => setTheme("dark")}
+            >
+              Escuro
+            </DropdownMenuCheckboxItem>
+          </DropdownMenuSubContent>
+        </DropdownMenuPortal>
+      </DropdownMenuSub>
+      <DropdownMenuSeparator />
       <DropdownMenuItem>
         <HelpCircle size={16} />
         Suporte

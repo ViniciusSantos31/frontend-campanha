@@ -72,7 +72,7 @@ export const Home: React.FC = () => {
           id="body-content-requester"
           className="w-full flex flex-col justify-end items-end space-y-6 max-w-screen-xl px-4 lg:px-0"
         >
-          <AlertInQueue />
+          <WaitingQueueAlert />
           <div
             id="list-providers"
             className="w-full space-y-4 overflow-hidden"
@@ -267,10 +267,10 @@ const StatusTag: React.FC<StatusProps> = ({ status, className, ...rest }) => {
   );
 };
 
-const AlertInQueue: React.FC = () => {
+const WaitingQueueAlert: React.FC = () => {
   return (
-    <AlertDialog>
-      <AlertDialogTrigger>
+    <AlertDialog defaultOpen>
+      <AlertDialogTrigger asChild>
         <Button className="h-10">
           <p className="font-sans font-medium text-sm">
             Entrar na fila de espera

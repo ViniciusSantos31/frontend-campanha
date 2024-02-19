@@ -239,6 +239,7 @@ export const SignUpForm: React.FC = () => {
         <footer className="w-full flex items-center justify-between">
           <Link
             to="/login"
+            replace
             className="flex items-center font-sans text-sm underline cursor-pointer transition-colors font-medium hover:text-slate-600"
           >
             Entrar na plataforma

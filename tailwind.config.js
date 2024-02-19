@@ -82,6 +82,10 @@ module.exports = {
           from: { opacity: "0" },
           to: { opacity: "1" },
         },
+        spin: {
+          from: { transform: "rotate(0deg)" },
+          to: { transform: "rotate(360deg)" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -89,6 +93,7 @@ module.exports = {
         "slide-right": "slide-right 0.2s ease-out",
         "slide-left": "slide-left 0.2s ease-out",
         "fade-in": "fade-in 0.2s ease-out",
+        spin: "spin 1.5s linear infinite",
       },
     },
   },

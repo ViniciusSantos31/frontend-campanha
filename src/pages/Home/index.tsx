@@ -119,16 +119,26 @@ type ProviderProps = {
 
 const Provider: React.FC<ProviderProps> = ({ provider }) => {
   return (
-    <li className="flex flex-col items-start justify-center space-y-4 px-6 border py-6 rounded-md md:flex-row md:items-center md:justify-between md:space-y-0">
+    <li
+      className={cn(
+        "flex flex-col items-start justify-center space-y-4 px-6 border py-6 rounded-md md:flex-row md:items-center md:justify-between md:space-y-0",
+        provider.status === "OFF" && "opacity-75"
+      )}
+    >
       <div className="flex space-x-2.5 md:flex-1">
-        <Avatar>
-          <AvatarImage src={provider.avatar} />
+        <Avatar className="backdrop-grayscale">
+          <AvatarImage
+            className={`${provider.status === "OFF" ? "grayscale" : ""}`}
+            src={provider.avatar}
+          />
           <AvatarFallback>VS</AvatarFallback>
         </Avatar>
         <div>
           <div className="flex items-center gap-2">
             <p className="font-sans font-medium text-sm">{provider.name}</p>
-            <StatusBadge status={provider.status} />
+            {provider.status === "ON" && (
+              <StatusBadge status={provider.status} />
+            )}
           </div>
           <p className="font-sans font-medium text-xs text-slate-400">
             {provider.email}
@@ -277,17 +287,19 @@ const WaitingQueueAlert: React.FC = () => {
           </p>
         </Button>
       </AlertDialogTrigger>
-      <AlertDialogContent>
-        <AlertDialogHeader>
-          <AlertDialogTitle>Aguardando consultor</AlertDialogTitle>
-          <AlertDialogDescription>
+      <AlertDialogContent className="items-center max-w-sm">
+        <Loader />
+        <AlertDialogHeader className="flex items-center">
+          <AlertDialogTitle className="text-center">
+            Aguardando consultor
+          </AlertDialogTitle>
+          <AlertDialogDescription className="text-center max-w-xs">
             Você está na fila de espera, assim que um consultor estiver
             disponível você será direcionado para uma conferência.
           </AlertDialogDescription>
         </AlertDialogHeader>
-        <Loader />
         <AlertDialogFooter>
-          <AlertDialogCancel className="bg-destructive hover:bg-destructive/90">
+          <AlertDialogCancel className="w-full bg-destructive hover:bg-destructive/90">
             <p className="font-sans font-medium text-sm text-white">
               Sair da fila
             </p>

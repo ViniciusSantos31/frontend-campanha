@@ -30,7 +30,7 @@ export const FooterSupport: React.FC<HTMLAttributes<HTMLDivElement>> = ({
         htmlFor="remember-me"
         className="flex items-center font-sans text-sm font-medium"
       >
-        versão 1.0.0
+        versão 0.0.1
       </Label>
     </footer>
   );

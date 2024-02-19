@@ -44,7 +44,7 @@ const AvatarBagde: React.FC = () => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <div className="w-auto gap-3 flex items-center p-2 rounded-md cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-800">
+        <button className="w-auto gap-3 flex items-center p-2 rounded-md cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-800">
           <div className="text-right hidden sm:block">
             <p className="text-sm font-sans font-semibold">Vinicius Silveira</p>
             <p className="text-xs font-sans font-medium text-slate-400">
@@ -55,7 +55,7 @@ const AvatarBagde: React.FC = () => {
             <AvatarImage src="https://avatars.githubusercontent.com/u/41171735?v=4" />
             <AvatarFallback>VS</AvatarFallback>
           </Avatar>
-        </div>
+        </button>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
         <DropdownContent />

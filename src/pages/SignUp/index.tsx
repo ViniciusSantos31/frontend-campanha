@@ -8,7 +8,7 @@ export const SignUp: React.FC = () => {
   return (
     <div
       id="container"
-      className="w-screen h-screen flex flex-col justify-between pt-8 lg:pt-0 overflow-x-hidden"
+      className="w-screen h-dvh flex flex-col justify-between pt-8 lg:pt-0 overflow-x-hidden"
     >
       <div
         className="w-full 

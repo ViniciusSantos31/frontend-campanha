@@ -46,9 +46,9 @@ const AvatarBagde: React.FC = () => {
       <DropdownMenuTrigger asChild>
         <div className="w-auto gap-3 flex items-center p-2 rounded-md cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-800">
           <div className="text-right hidden sm:block">
-            <p className="text-sm font-sans font-semibold">Vinicius Silva</p>
+            <p className="text-sm font-sans font-semibold">Vinicius Silveira</p>
             <p className="text-xs font-sans font-medium text-slate-400">
-              Administrador
+              Solicitante
             </p>
           </div>
           <Avatar className="size-10">
@@ -123,7 +123,10 @@ const DropdownContent: React.FC = () => {
       </DropdownMenuItem>
       <DropdownMenuSeparator />
       <DropdownMenuItem asChild>
-        <Link to="/login">
+        <Link
+          to="/login"
+          replace
+        >
           <LogOutIcon size={16} />
           <p>Sair</p>
         </Link>

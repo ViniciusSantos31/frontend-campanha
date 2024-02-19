@@ -126,6 +126,7 @@ export const LoginForm: React.FC = () => {
         <footer className="w-full flex items-center justify-between">
           <Link
             to="/signup"
+            replace
             className="flex items-center font-sans text-sm underline cursor-pointer transition-colors font-medium hover:text-slate-600"
           >
             Cadastre-se

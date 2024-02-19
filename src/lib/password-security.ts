@@ -23,6 +23,8 @@ function getPasswordSecurity(password: string): number {
     points += 1;
   }
 
+  if (length < 6) points = 0;
+
   return points > 0 ? Math.round((points / 5) * 100) : 0;
 }
 

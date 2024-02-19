@@ -73,6 +73,10 @@
       @apply bg-background text-foreground transition-colors;
     }
 
+    #loading-icon {
+      background: url("./assets/loader-icon.svg");
+    }
+
     *::-webkit-scrollbar {
       @apply w-1 p-1;
     }

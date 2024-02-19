@@ -11,16 +11,16 @@ export const Login: React.FC = () => {
       id="container"
       className="w-screen h-screen pt-8 flex flex-col justify-between"
     >
-      <body className="w-full flex flex-col flex-1 items-center justify-center gap-y-10 px-8 lg:flex-row lg:space-x-24">
-        <div
+      <div className="w-full flex flex-col flex-1 items-center justify-center gap-y-10 px-8 lg:flex-row lg:space-x-24">
+        <aside
           id="logo"
           className="flex items-center flex-col"
         >
           <p className="font-sans text-4xl">Plantão</p>
           <ProconLogo />
-        </div>
+        </aside>
         <LoginForm />
-      </body>
+      </div>
       <FooterSupport />
     </div>
   );

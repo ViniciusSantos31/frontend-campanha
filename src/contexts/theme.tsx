@@ -30,23 +30,19 @@ export function ThemeProvider({
     () => (localStorage.getItem(storageKey) as Theme) || defaultTheme
   );
 
-  useEffect(() => {
-    const root = window.document.documentElement;
+  const root = window.document.documentElement;
+  const systemTheme = window.matchMedia("(prefers-color-scheme: dark)");
 
+  useEffect(() => {
     root.classList.remove("light", "dark");
 
     if (theme === "system") {
-      const systemTheme = window.matchMedia("(prefers-color-scheme: dark)")
-        .matches
-        ? "dark"
-        : "light";
-
-      root.classList.add(systemTheme);
+      root.classList.add(systemTheme.matches ? "dark" : "light");
       return;
     }
 
     root.classList.add(theme);
-  }, [theme]);
+  }, [theme, root, systemTheme.matches]);
 
   const value = {
     theme,

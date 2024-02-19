@@ -81,7 +81,12 @@ export const Home: React.FC = () => {
               Teleconsultores
             </h1>
             <ListProviders
-              providers={[user, user]}
+              providers={[
+                { ...user, status: "ON" },
+                { ...user, status: "WAITING" },
+                { ...user, status: "BUSY" },
+                user,
+              ]}
               loading={users.length === 0}
             />
           </div>

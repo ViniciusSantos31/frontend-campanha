@@ -24,7 +24,7 @@ export const Header: React.FC<HeaderProps> = ({ className, ...rest }) => {
   return (
     <header
       className={cn(
-        "w-full flex items-center justify-center py-2.5 px-2 border-b border-slate-300 sm:px-6 md:px-12 dark:border-slate-700 sticky top-0 bg-white dark:bg-slate-900 z-10",
+        "w-full flex items-center justify-center py-2.5 px-2 border-b border-slate-300 sm:px-6 md:px-12 dark:border-slate-700 sticky top-0 bg-white dark:bg-card z-10",
         className
       )}
       {...rest}
@@ -34,17 +34,17 @@ export const Header: React.FC<HeaderProps> = ({ className, ...rest }) => {
         className="w-full max-w-screen-xl flex items-center justify-between px-4 md:px-0 md:w-full"
       >
         <LogoHeader />
-        <AvatarBagde />
+        <AvatarBadge />
       </div>
     </header>
   );
 };
 
-const AvatarBagde: React.FC = () => {
+const AvatarBadge: React.FC = () => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <button className="w-auto gap-3 flex items-center p-2 rounded-md cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-800">
+        <button className="w-auto gap-3 flex items-center p-2 rounded-md cursor-pointer hover:bg-slate-50 dark:hover:bg-accent">
           <div className="text-right hidden sm:block">
             <p className="text-sm font-sans font-semibold">Vinicius Silveira</p>
             <p className="text-xs font-sans font-medium text-slate-400">

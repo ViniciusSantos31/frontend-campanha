@@ -24,12 +24,12 @@ function Root() {
       />
       <Route
         caseSensitive
-        path="/login"
+        path="login"
         element={<Login />}
       />
       <Route
         caseSensitive
-        path="/signup"
+        path="signup"
         element={<SignUp />}
       />
     </Routes>

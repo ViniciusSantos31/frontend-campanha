@@ -1,8 +1,8 @@
 import { cn } from "@/lib/utils";
 import { HTMLAttributes } from "react";
 import { Link } from "react-router-dom";
-import { Label } from "../components/ui/label";
-import { Separator } from "../components/ui/separator";
+import { Label } from "./ui/label";
+import { Separator } from "./ui/separator";
 
 export const FooterSupport: React.FC<HTMLAttributes<HTMLDivElement>> = ({
   className,

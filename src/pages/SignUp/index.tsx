@@ -1,7 +1,7 @@
 import React from "react";
 
 import { ProconLogo } from "@/assets/procon-logo";
-import { FooterSupport } from "@/components/footer-support";
+import { FooterSupport } from "@/components/footerSupport";
 import { SignUpForm } from "@/components/forms/SignUp";
 
 export const SignUp: React.FC = () => {

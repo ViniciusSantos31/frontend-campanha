@@ -85,7 +85,7 @@ export const SignUpForm: React.FC = () => {
     <Form {...form}>
       <form
         id="form-signup"
-        className="w-full flex flex-col items-start justify-center p-6 border rounded-md space-y-8 md:w-1/2 lg:w-1/3 xl:max-w-lg animate-slide-left transition-all"
+        className="w-full flex flex-col items-start justify-center p-6 border rounded-md space-y-8 md:w-full lg:w-1/2 xl:max-w-lg animate-slide-left transition-all"
         onSubmit={handleSubmit(handleCreateUser, (data) => console.log(data))}
       >
         <span className="text-2xl font-semibold">Cadastro</span>

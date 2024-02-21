@@ -1,8 +1,8 @@
 import { cn } from "@/lib/utils";
 import { HTMLAttributes } from "react";
 import { Link } from "react-router-dom";
-import { Label } from "../components/ui/label";
-import { Separator } from "../components/ui/separator";
+import { Label } from "./ui/label";
+import { Separator } from "./ui/separator";
 
 export const FooterSupport: React.FC<HTMLAttributes<HTMLDivElement>> = ({
   className,
@@ -30,7 +30,7 @@ export const FooterSupport: React.FC<HTMLAttributes<HTMLDivElement>> = ({
         htmlFor="remember-me"
         className="flex items-center font-sans text-sm font-medium"
       >
-        versão 1.0.0
+        versão 0.0.1
       </Label>
     </footer>
   );

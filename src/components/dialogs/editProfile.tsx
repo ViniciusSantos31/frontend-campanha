@@ -5,6 +5,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import { useAuth } from "@/hooks/useAuth";
 import {
   IEditProfileSchema,
   editProfileResolver,
@@ -23,12 +24,14 @@ import {
 import { Input } from "../ui/input";
 
 const EditProfile: React.FC = () => {
+  const { user } = useAuth();
+
   const form = useForm<IEditProfileSchema>({
     resolver: editProfileResolver,
     mode: "all",
     defaultValues: {
-      name: "Vinicius Silveira",
-      email: "vncssnts31@gmail.com",
+      name: user?.name ?? "",
+      email: user?.email ?? "",
       avatar: "",
     },
   });
@@ -43,7 +46,7 @@ const EditProfile: React.FC = () => {
           Editar perfil
         </DialogTitle>
         <DialogDescription>
-          edite as informações do seu perfil
+          Edite as informações do seu perfil
         </DialogDescription>
       </DialogHeader>
       <Form {...form}>

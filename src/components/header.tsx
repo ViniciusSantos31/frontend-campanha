@@ -1,4 +1,5 @@
 import { ProconLogo } from "@/assets/procon-logo";
+import { useAuth } from "@/hooks/useAuth";
 import { useTheme } from "@/hooks/useTheme";
 import { cn } from "@/utils";
 import { HelpCircle, LogOutIcon, Monitor, Moon, Sun, User } from "lucide-react";
@@ -43,26 +44,32 @@ export const Header: React.FC<HeaderProps> = ({ className, ...rest }) => {
 };
 
 const AvatarBadge: React.FC = () => {
+  const { user } = useAuth();
+
+  const getFallbackAvatar = () => {
+    const [firstName, lastName] = user?.name.split(" ") || ["", ""];
+
+    return `${firstName.charAt(0)}${lastName.charAt(0)}`;
+  };
+
   return (
     <Dialog>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <button className="w-auto gap-3 flex items-center p-2 rounded-md cursor-pointer hover:bg-slate-50 dark:hover:bg-accent">
             <div className="text-right hidden sm:block">
-              <p className="text-sm font-sans font-semibold">
-                Vinicius Silveira
-              </p>
+              <p className="text-sm font-sans font-semibold">{user?.name}</p>
               <p className="text-xs font-sans font-medium text-slate-400">
-                Solicitante
+                {user?.role === "PROVIDER" ? "Consultor" : "Solicitante"}
               </p>
             </div>
             <Avatar className="size-10">
               <AvatarImage src="https://avatars.githubusercontent.com/u/41171735?v=4" />
-              <AvatarFallback>VS</AvatarFallback>
+              <AvatarFallback>{getFallbackAvatar()}</AvatarFallback>
             </Avatar>
           </button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent>
+        <DropdownMenuContent className="min-w-40">
           <DropdownContent />
         </DropdownMenuContent>
       </DropdownMenu>
@@ -75,6 +82,7 @@ const AvatarBadge: React.FC = () => {
 
 const DropdownContent: React.FC = () => {
   const { theme, setTheme } = useTheme();
+  const { user } = useAuth();
 
   const getIconTheme = () => {
     if (theme === "dark") {
@@ -87,9 +95,7 @@ const DropdownContent: React.FC = () => {
 
   return (
     <>
-      <DropdownMenuLabel className="mr-8">
-        Vinícius dos Santos
-      </DropdownMenuLabel>
+      <DropdownMenuLabel className="mr-8">{user?.name}</DropdownMenuLabel>
       <DropdownMenuSeparator />
       <DialogTrigger asChild>
         <DropdownMenuItem>

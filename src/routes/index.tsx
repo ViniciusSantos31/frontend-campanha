@@ -20,12 +20,12 @@ function Root() {
     <Routes>
       <Route
         path="/"
-        element={<Home />}
+        element={<Login />}
       />
       <Route
         caseSensitive
-        path="login"
-        element={<Login />}
+        path="home"
+        element={<Home />}
       />
       <Route
         caseSensitive

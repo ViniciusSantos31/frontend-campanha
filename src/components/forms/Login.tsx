@@ -60,7 +60,7 @@ export const LoginForm: React.FC = () => {
   };
 
   const navigateToHome = () => {
-    navigate("/", {
+    navigate("/home", {
       preventScrollReset: true,
       replace: true,
       unstable_viewTransition: true,

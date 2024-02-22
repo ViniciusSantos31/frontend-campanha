@@ -4,7 +4,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { cn } from "@/lib/utils";
+import { cn } from "@/utils";
 import { CalendarX, Pause, RadioIcon, WifiOff } from "lucide-react";
 import { ReactElement, cloneElement } from "react";
 

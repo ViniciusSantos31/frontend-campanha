@@ -13,7 +13,6 @@ import {
   FormItem,
   FormMessage,
 } from "../ui/form";
-import console from "console";
 
 export const LoginForm: React.FC = () => {
   const navigate = useNavigate();

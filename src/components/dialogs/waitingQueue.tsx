@@ -13,7 +13,7 @@ import { Button } from "../ui/button";
 
 const WaitingQueueAlert: React.FC = () => {
   return (
-    <AlertDialog defaultOpen>
+    <AlertDialog>
       <AlertDialogTrigger asChild>
         <Button className="h-10">
           <p className="font-sans font-medium text-sm">

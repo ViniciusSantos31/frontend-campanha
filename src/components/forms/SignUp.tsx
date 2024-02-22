@@ -1,4 +1,4 @@
-import getPasswordSecurity from "@/lib/password-security";
+import { getPasswordSecurity } from "@/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMemo } from "react";
 import { useForm } from "react-hook-form";

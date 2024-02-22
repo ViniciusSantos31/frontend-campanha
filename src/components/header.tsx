@@ -1,9 +1,11 @@
 import { ProconLogo } from "@/assets/procon-logo";
 import { useTheme } from "@/hooks/useTheme";
-import { cn } from "@/lib/utils";
+import { cn } from "@/utils";
 import { HelpCircle, LogOutIcon, Monitor, Moon, Sun, User } from "lucide-react";
 import { Link } from "react-router-dom";
+import EditProfile from "./dialogs/editProfile";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
+import { Dialog, DialogContent, DialogTrigger } from "./ui/dialog";
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -42,25 +44,32 @@ export const Header: React.FC<HeaderProps> = ({ className, ...rest }) => {
 
 const AvatarBadge: React.FC = () => {
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <button className="w-auto gap-3 flex items-center p-2 rounded-md cursor-pointer hover:bg-slate-50 dark:hover:bg-accent">
-          <div className="text-right hidden sm:block">
-            <p className="text-sm font-sans font-semibold">Vinicius Silveira</p>
-            <p className="text-xs font-sans font-medium text-slate-400">
-              Solicitante
-            </p>
-          </div>
-          <Avatar className="size-10">
-            <AvatarImage src="https://avatars.githubusercontent.com/u/41171735?v=4" />
-            <AvatarFallback>VS</AvatarFallback>
-          </Avatar>
-        </button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent>
-        <DropdownContent />
-      </DropdownMenuContent>
-    </DropdownMenu>
+    <Dialog>
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <button className="w-auto gap-3 flex items-center p-2 rounded-md cursor-pointer hover:bg-slate-50 dark:hover:bg-accent">
+            <div className="text-right hidden sm:block">
+              <p className="text-sm font-sans font-semibold">
+                Vinicius Silveira
+              </p>
+              <p className="text-xs font-sans font-medium text-slate-400">
+                Solicitante
+              </p>
+            </div>
+            <Avatar className="size-10">
+              <AvatarImage src="https://avatars.githubusercontent.com/u/41171735?v=4" />
+              <AvatarFallback>VS</AvatarFallback>
+            </Avatar>
+          </button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent>
+          <DropdownContent />
+        </DropdownMenuContent>
+      </DropdownMenu>
+      <DialogContent>
+        <EditProfile />
+      </DialogContent>
+    </Dialog>
   );
 };
 
@@ -82,10 +91,12 @@ const DropdownContent: React.FC = () => {
         Vinícius dos Santos
       </DropdownMenuLabel>
       <DropdownMenuSeparator />
-      <DropdownMenuItem>
-        <User size={16} />
-        Editar perfil
-      </DropdownMenuItem>
+      <DialogTrigger asChild>
+        <DropdownMenuItem>
+          <User size={16} />
+          Editar perfil
+        </DropdownMenuItem>
+      </DialogTrigger>
       <DropdownMenuSub>
         <DropdownMenuSubTrigger>
           <div className="flex items-center gap-2">
@@ -124,7 +135,7 @@ const DropdownContent: React.FC = () => {
       <DropdownMenuSeparator />
       <DropdownMenuItem asChild>
         <Link
-          to="/login"
+          to="/"
           replace
         >
           <LogOutIcon size={16} />

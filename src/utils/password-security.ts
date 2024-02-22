@@ -1,4 +1,4 @@
-function getPasswordSecurity(password: string): number {
+export function getPasswordSecurity(password: string): number {
   const length = password.length;
   const hasUppercase = /[A-Z]/.test(password);
   const hasLowercase = /[a-z]/.test(password);
@@ -27,5 +27,3 @@ function getPasswordSecurity(password: string): number {
 
   return points > 0 ? Math.round((points / 5) * 100) : 0;
 }
-
-export default getPasswordSecurity;

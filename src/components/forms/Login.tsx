@@ -3,10 +3,9 @@ import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 
-import { zodResolver } from "@hookform/resolvers/zod";
+import { ILoginSchema, loginResolver } from "@/validations/login";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
 import {
   Form,
   FormControl,
@@ -15,26 +14,11 @@ import {
   FormMessage,
 } from "../ui/form";
 
-const loginSchema = z.object({
-  email: z
-    .string({
-      required_error: "O e-mail é obrigatório",
-      invalid_type_error: "Insira um e-mail válido",
-    })
-    .email("Insira um e-mail válido"),
-  password: z
-    .string({
-      required_error: "A senha é obrigatória",
-    })
-    .min(6, "A senha deve ter no mínimo 6 caracteres"),
-});
-
-type LoginSchema = z.infer<typeof loginSchema>;
-
 export const LoginForm: React.FC = () => {
   const navigate = useNavigate();
-  const form = useForm<LoginSchema>({
-    resolver: zodResolver(loginSchema),
+
+  const form = useForm<ILoginSchema>({
+    resolver: loginResolver,
     mode: "all",
   });
 
@@ -46,7 +30,7 @@ export const LoginForm: React.FC = () => {
 
   const [isLoading, setLoading] = useState<boolean>(false);
 
-  const handleLogin = (data: LoginSchema) => {
+  const handleLogin = (data: ILoginSchema) => {
     try {
       console.log("data", data);
       setLoading(true);

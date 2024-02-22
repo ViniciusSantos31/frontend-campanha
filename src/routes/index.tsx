@@ -32,6 +32,11 @@ function Root() {
         path="signup"
         element={<SignUp />}
       />
+      <Route
+        path="*"
+        element={<Login />}
+        hydrateFallbackElement={<Login />}
+      />
     </Routes>
   );
 }

@@ -1,12 +1,12 @@
 import * as React from "react";
 
-import { cn } from "@/utils";
+import { cn } from "@utils/cn";
 import { Label } from "./label";
 
 export interface InputProps
   extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: string;
-  id: string;
+  id?: string;
 }
 
 const Input = React.forwardRef<HTMLInputElement, InputProps>(

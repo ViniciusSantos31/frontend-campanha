@@ -1,4 +1,4 @@
-import { cn } from "@/utils";
+import { cn } from "@utils/cn";
 import { HTMLAttributes } from "react";
 import { Link } from "react-router-dom";
 import { Label } from "./ui/label";

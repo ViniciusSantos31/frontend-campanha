@@ -3,8 +3,8 @@ import {
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "@/components/ui/tooltip";
-import { cn } from "@/utils";
+} from "@components/ui/tooltip";
+import { cn } from "@utils/cn";
 import { CalendarX, Pause, RadioIcon, WifiOff } from "lucide-react";
 import { ReactElement, cloneElement } from "react";
 
@@ -55,10 +55,10 @@ const getLabelByStatus = (status: "ON" | "OFF" | "WAITING" | "BUSY") => {
 };
 
 const icons: Record<StatusProps["status"], ReactElement> = {
-  ON: <RadioIcon />,
-  OFF: <WifiOff />,
-  WAITING: <Pause />,
-  BUSY: <CalendarX />,
+  ON: <RadioIcon data-testid="status-on-icon" />,
+  OFF: <WifiOff data-testid="status-off-icon" />,
+  WAITING: <Pause data-testid="status-waiting-icon" />,
+  BUSY: <CalendarX data-testid="status-busy-icon" />,
 };
 
 const StatusBadge: React.FC<StatusProps> = ({ status, className, ...rest }) => {

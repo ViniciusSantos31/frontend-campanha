@@ -1,4 +1,4 @@
-import { Loader } from "@/components/loader";
+import { Loader } from "@components/loader";
 import {
   AlertDialog,
   AlertDialogCancel,
@@ -8,7 +8,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
+} from "@components/ui/alert-dialog";
 import { Button } from "../ui/button";
 
 const WaitingQueueAlert: React.FC = () => {

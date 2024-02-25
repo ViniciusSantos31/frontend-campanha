@@ -1,5 +1,5 @@
 import { User } from "@/types/user";
-import React, { createContext } from "react";
+import { createContext } from "react";
 
 type AuthProviderProps = {
   children: React.ReactNode;
@@ -21,6 +21,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     email: "jondoe@email.com",
     name: "John Doe",
     role: "PROVIDER",
+    avatar: "https://avatars.githubusercontent.com/u/41171735?v=4",
   };
 
   return (

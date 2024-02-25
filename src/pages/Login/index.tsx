@@ -1,9 +1,6 @@
-import React from "react";
-
-// import ProconLogo from "@/assets/procon-logo.svg";
-import { ProconLogo } from "@/assets/procon-logo";
-import { FooterSupport } from "@/components/footerSupport";
-import { LoginForm } from "@/components/forms/Login";
+import { ProconLogo } from "@assets/procon-logo";
+import { FooterSupport } from "@components/footerSupport";
+import { LoginForm } from "@components/forms/Login";
 
 export const Login: React.FC = () => {
   return (

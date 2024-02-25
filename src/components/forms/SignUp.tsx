@@ -1,5 +1,5 @@
-import { getPasswordSecurity } from "@/utils";
-import { ISignUpSchema, signUpResolver } from "@/validations/register";
+import { getPasswordSecurity } from "@utils/password-security";
+import { ISignUpSchema, signUpResolver } from "@validations/register";
 import { useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";

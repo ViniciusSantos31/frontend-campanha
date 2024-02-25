@@ -61,6 +61,10 @@ module.exports = {
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
       },
+      transitionDelay: {
+        0: "0ms",
+        2000: "2000ms",
+      },
       keyframes: {
         "accordion-down": {
           from: { height: "0" },
@@ -86,6 +90,11 @@ module.exports = {
           from: { transform: "rotate(0deg)" },
           to: { transform: "rotate(360deg)" },
         },
+        "radar-pulse": {
+          "0%": { transform: "scale(0)", opacity: 0 },
+          "50%": { transform: "scale(1)", opacity: 1 },
+          "100%": { transform: "scale(2)", opacity: 0 },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -94,6 +103,7 @@ module.exports = {
         "slide-left": "slide-left 0.2s ease-out",
         "fade-in": "fade-in 0.2s ease-out",
         spin: "spin 1.5s linear infinite",
+        "radar-pulse": "radar-pulse 2s infinite",
       },
     },
   },

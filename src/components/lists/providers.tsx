@@ -1,11 +1,11 @@
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Separator } from "@/components/ui/separator";
 import {
   ListProviderProps,
   Provider,
   ProviderInfoProps,
 } from "@/types/provider";
-import { cn } from "@/utils";
+import { Avatar, AvatarFallback, AvatarImage } from "@components/ui/avatar";
+import { Separator } from "@components/ui/separator";
+import { cn } from "@utils/cn";
 import { StatusBadge, StatusTag } from "../status";
 import { Skeleton } from "../ui/skeleton";
 

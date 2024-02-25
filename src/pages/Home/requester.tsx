@@ -1,8 +1,8 @@
-import WaitingQueueAlert from "@/components/dialogs/waitingQueue";
-import { Header } from "@/components/header";
-import ListProviders from "@/components/lists/providers";
 import { Provider } from "@/types/provider";
-import React, { useEffect, useState } from "react";
+import WaitingQueueAlert from "@components/dialogs/waitingQueue";
+import { Header } from "@components/header";
+import ListProviders from "@components/lists/providers";
+import { useEffect, useState } from "react";
 
 export const HomeRequester: React.FC = () => {
   const user: Provider = {

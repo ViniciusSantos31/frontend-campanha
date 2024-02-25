@@ -4,12 +4,12 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog";
-import { useAuth } from "@/hooks/useAuth";
+} from "@components/ui/dialog";
+import { useAuth } from "@hooks/useAuth";
 import {
   IEditProfileSchema,
   editProfileResolver,
-} from "@/validations/editProfile";
+} from "@validations/editProfile";
 import { User } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { Avatar, AvatarImage } from "../ui/avatar";

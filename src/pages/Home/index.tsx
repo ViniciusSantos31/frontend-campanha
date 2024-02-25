@@ -1,4 +1,4 @@
-import { useAuth } from "@/hooks/useAuth";
+import { useAuth } from "@hooks/useAuth";
 import { HomeProvider } from "./provider";
 import { HomeRequester } from "./requester";
 

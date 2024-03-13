@@ -1,31 +1,8 @@
-import { Provider } from "@/types/provider";
 import WaitingQueueAlert from "@components/dialogs/waitingQueue";
 import { Header } from "@components/header";
 import ListProviders from "@components/lists/providers";
-import { useEffect, useState } from "react";
 
 export const HomeRequester: React.FC = () => {
-  const user: Provider = {
-    id: "123",
-    name: "Vinicius Silveira",
-    avatar: "https://avatars.githubusercontent.com/u/41171735?v=4",
-    email: "vncssnts31@gmail.com",
-    doc: "CRM/PB 1234",
-    status: "OFF",
-  };
-
-  const [users, setUsers] = useState<Provider[]>([]);
-
-  const handleLoadUsers = () => {
-    setTimeout(() => {
-      setUsers([user, user, user, user]);
-    }, 5000);
-  };
-
-  useEffect(() => {
-    handleLoadUsers();
-  }, []);
-
   return (
     <div className="w-screen flex flex-col items-center">
       <Header />
@@ -47,12 +24,25 @@ export const HomeRequester: React.FC = () => {
             </h1>
             <ListProviders
               providers={[
-                { ...user, status: "ON", id: "1" },
-                { ...user, status: "WAITING", id: "2" },
-                { ...user, status: "BUSY", id: "3" },
-                user,
+                {
+                  id: "1",
+                  avatar:
+                    "https://avatars.githubusercontent.com/u/41171735?v=4",
+                  name: "John Doe",
+                  doc: "12345678900",
+                  status: "ON",
+                  email: "oi@email.com",
+                },
+                {
+                  id: "1",
+                  avatar:
+                    "https://avatars.githubusercontent.com/u/41171735?v=4",
+                  name: "John Doe",
+                  doc: "12345678900",
+                  status: "OFF",
+                  email: "oi@email.com",
+                },
               ]}
-              loading={users.length === 0}
             />
           </div>
         </div>

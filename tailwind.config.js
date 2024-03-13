@@ -99,7 +99,7 @@ module.exports = {
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
-        "slide-right": "slide-right 0.2s ease-out",
+        "slide-right": "slide-right 0.2s ease-out 0s 1",
         "slide-left": "slide-left 0.2s ease-out",
         "fade-in": "fade-in 0.2s ease-out",
         spin: "spin 1.5s linear infinite",

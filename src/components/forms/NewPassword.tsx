@@ -1,9 +1,12 @@
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
-import { Label } from "../ui/label";
 
-import { ILoginSchema, loginResolver } from "@validations/login";
+import {
+  INewPasswordSchema,
+  newPasswordResolver,
+} from "@validations/recoveryPassword/newPassword";
+import { ArrowLeft } from "lucide-react";
 import { useForm } from "react-hook-form";
 import {
   Form,
@@ -13,11 +16,11 @@ import {
   FormMessage,
 } from "../ui/form";
 
-export const LoginForm: React.FC = () => {
+export const NewPasswordForm: React.FC = () => {
   const navigate = useNavigate();
 
-  const form = useForm<ILoginSchema>({
-    resolver: loginResolver,
+  const form = useForm<INewPasswordSchema>({
+    resolver: newPasswordResolver,
     mode: "all",
   });
 
@@ -28,7 +31,7 @@ export const LoginForm: React.FC = () => {
   } = form;
 
   const navigateToHome = () => {
-    navigate("/home", {
+    navigate("/recovery/confirm", {
       preventScrollReset: true,
       replace: true,
       unstable_viewTransition: true,
@@ -40,24 +43,41 @@ export const LoginForm: React.FC = () => {
     <Form {...form}>
       <form
         id="form-signup"
-        className="w-full flex flex-col items-start justify-center p-6 border rounded-md space-y-8 lg:w-1/2 bg-background xl:max-w-lg animate-slide-right"
+        className="w-full flex flex-col items-start justify-center p-6 border rounded-md space-y-8 lg:w-1/2 bg-background xl:max-w-lg animate-slide-left"
         onSubmit={handleSubmit(navigateToHome)}
       >
-        <span className="text-2xl font-semibold">Entrar</span>
+        <div>
+          <Button
+            variant="outline"
+            size="icon"
+            className="mb-4"
+            type="button"
+            onClick={() => navigate("/recovery/request")}
+          >
+            <ArrowLeft />
+          </Button>
+          <div>
+            <span className="text-2xl font-semibold mb-3">Nova senha</span>
+            <p className="text-gray-500">
+              Por favor, insira sua nova senha para continuar.
+            </p>
+          </div>
+        </div>
         <div
           id="input-container"
           className="w-full flex flex-col items-end space-y-2"
         >
           <FormField
             control={control}
-            name="email"
+            name="new_password"
             render={({ field }) => (
               <FormItem>
                 <FormControl>
                   <Input
-                    id="email"
-                    label="E-mail"
-                    placeholder="E-mail"
+                    id="new_password"
+                    label="Nova senha"
+                    placeholder="Nova senha"
+                    type="password"
                     autoFocus
                     {...field}
                   />
@@ -69,14 +89,14 @@ export const LoginForm: React.FC = () => {
 
           <FormField
             control={control}
-            name="password"
+            name="password_confirmation"
             render={({ field }) => (
               <FormItem>
                 <FormControl>
                   <Input
-                    id="password"
-                    label="Senha"
-                    placeholder="Senha"
+                    id="password_confirmation"
+                    label="Confirme sua nova senha"
+                    placeholder="Confirme sua nova senha"
                     type="password"
                     {...field}
                   />
@@ -85,28 +105,14 @@ export const LoginForm: React.FC = () => {
               </FormItem>
             )}
           />
-          <Link to="/recovery/request">
-            <Label
-              htmlFor="remember-me"
-              className="flex items-center font-sans text-sm underline cursor-pointer transition-colors font-medium hover:text-gray-400"
-            >
-              Esqueceu sua senha?
-            </Label>
-          </Link>
         </div>
         <footer className="w-full flex items-center justify-between">
-          <Link
-            to="/signup"
-            replace
-            className="flex items-center font-sans text-sm underline cursor-pointer transition-colors font-medium hover:text-gray-400"
-          >
-            Cadastre-se
-          </Link>
           <Button
+            className="w-full"
             disabled={!isValid}
             type="submit"
           >
-            Entrar
+            Criar nova senha
           </Button>
         </footer>
       </form>

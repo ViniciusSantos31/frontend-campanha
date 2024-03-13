@@ -7,6 +7,8 @@ import { WifiOff } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
 import { toast } from "sonner";
 
+import NotificationAudio from "@assets/sounds/notification.mp3";
+
 export const HomeProvider: React.FC = () => {
   const [online, setOnline] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
@@ -23,6 +25,8 @@ export const HomeProvider: React.FC = () => {
     await new Promise((resolve) =>
       setTimeout(resolve, Math.random() * 5000 + 3000)
     );
+
+    const audioElement = new Audio(NotificationAudio);
 
     toast.success("Você tem um novo chamado!", {
       description: "Clique para atender",
@@ -55,6 +59,8 @@ export const HomeProvider: React.FC = () => {
         },
       },
     });
+
+    audioElement.play();
   }, []);
 
   useEffect(() => {
@@ -133,7 +139,7 @@ const AvatarStatus: React.FC<{ online: boolean }> = ({ online }) => {
           online && "grayscale-0 opacity-100"
         )}
       >
-        <AvatarImage src={user?.avatar} />
+        <AvatarImage src={user?.avatar_url} />
         <AvatarFallback className="text-4xl font-bold">VS</AvatarFallback>
       </Avatar>
     </div>

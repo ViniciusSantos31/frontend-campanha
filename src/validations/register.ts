@@ -12,9 +12,15 @@ const signUpSchema = z.object({
       required_error: "O CPF é obrigatório",
     })
     .min(11, "O CPF deve ter 11 caracteres")
-    .refine((value) => isFinite(Number(value)), {
-      message: "O CPF deve ser composto apenas por números",
-    }),
+    .refine(
+      (value) => {
+        const personal_doc = value.replace(/[^a-zA-Z0-9 ]/g, "");
+        return personal_doc.length === 11 && !isNaN(Number(personal_doc));
+      },
+      {
+        message: "Digite um CPF válido",
+      }
+    ),
   professional_doc: z
     .string({
       required_error: "O CRM é obrigatório",
@@ -24,7 +30,7 @@ const signUpSchema = z.object({
     .string({
       required_error: "O celular é obrigatório",
     })
-    .min(11, "O celular deve ter 11 caracteres"),
+    .min(8, "Digite um número de celular válido"),
   email: z
     .string({
       required_error: "O e-mail é obrigatório",

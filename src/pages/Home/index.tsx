@@ -5,5 +5,5 @@ import { HomeRequester } from "./requester";
 export const Home: React.FC = () => {
   const { user } = useAuth();
 
-  return user?.role === "PROVIDER" ? <HomeProvider /> : <HomeRequester />;
+  return user?.userType === "PROVIDER" ? <HomeProvider /> : <HomeRequester />;
 };

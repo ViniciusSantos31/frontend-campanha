@@ -1,11 +1,10 @@
 import { createRoot } from "react-dom/client";
 
-import { StrictMode, lazy } from "react";
+import { StrictMode } from "react";
+import App from "./App.tsx";
 import { AuthProvider } from "./contexts/auth.tsx";
 import { ThemeProvider } from "./contexts/theme.tsx";
 import "./global.css";
-
-const App = lazy(() => import("./App.tsx"));
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>

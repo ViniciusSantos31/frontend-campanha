@@ -18,7 +18,7 @@ export const LoginForm: React.FC = () => {
 
   const form = useForm<ILoginSchema>({
     resolver: loginResolver,
-    mode: "all",
+    mode: "onChange",
   });
 
   const {

@@ -6,7 +6,7 @@ const confirmCodeSchema = z.object({
     .string({
       required_error: "O código é obrigatório",
     })
-    .min(6, "O código deve possuír 6 dígitos"),
+    .min(4, "O código deve possuír 4 dígitos"),
 });
 
 export type IConfirmCodeSchema = z.infer<typeof confirmCodeSchema>;

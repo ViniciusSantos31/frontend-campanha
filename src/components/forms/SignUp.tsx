@@ -28,7 +28,7 @@ const maskOptions: MaskOptions = {
 export const SignUpForm: React.FC = () => {
   const form = useForm<ISignUpSchema>({
     resolver: signUpResolver,
-    mode: "all",
+    mode: "onChange",
     defaultValues: {
       phone: "82088717",
     },

@@ -25,7 +25,7 @@ export const ConfirmCodeForm: React.FC = () => {
 
   const form = useForm<IConfirmCodeSchema>({
     resolver: confirmCodeResolver,
-    mode: "all",
+    mode: "onChange",
   });
 
   const {
@@ -83,21 +83,21 @@ export const ConfirmCodeForm: React.FC = () => {
                 <FormControl>
                   <InputOTP
                     autoFocus
-                    maxLength={6}
+                    maxLength={4}
                     render={({ slots }) => (
                       <>
                         <InputOTPGroup className="w-full">
                           {slots.map((slot, index) => (
                             <InputOTPSlot
-                              className="h-14 w-full"
                               key={index}
+                              className="h-14 w-full"
                               {...slot}
                             />
                           ))}
                         </InputOTPGroup>
                       </>
                     )}
-                    className="w-full flex items-center justify-center space-x-2"
+                    className="w-full flex items-center justify-center"
                     {...field}
                   />
                 </FormControl>

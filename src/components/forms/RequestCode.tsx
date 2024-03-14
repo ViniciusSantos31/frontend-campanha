@@ -21,7 +21,7 @@ export const RequestCodeForm: React.FC = () => {
 
   const form = useForm<IRequestCodeSchema>({
     resolver: requestCodeResolver,
-    mode: "all",
+    mode: "onChange",
   });
 
   const {
@@ -93,7 +93,7 @@ export const RequestCodeForm: React.FC = () => {
             disabled={!isValid}
             type="submit"
           >
-            Entrar
+            Enviar
           </Button>
         </footer>
       </form>

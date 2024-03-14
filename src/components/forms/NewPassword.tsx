@@ -21,7 +21,7 @@ export const NewPasswordForm: React.FC = () => {
 
   const form = useForm<INewPasswordSchema>({
     resolver: newPasswordResolver,
-    mode: "all",
+    mode: "onChange",
   });
 
   const {

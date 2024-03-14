@@ -30,7 +30,7 @@ const EditProfile: React.FC = () => {
     resolver: editProfileResolver,
     mode: "all",
     defaultValues: {
-      name: user?.name ?? "",
+      name: `${user?.firstName} ${user?.lastName}` ?? "",
       email: user?.email ?? "",
       avatar: "",
     },

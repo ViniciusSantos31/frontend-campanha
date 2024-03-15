@@ -3,7 +3,9 @@ import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 
+import { useAuth } from "@hooks/useAuth";
 import { ILoginSchema, loginResolver } from "@validations/login";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import {
   Form,
@@ -27,21 +29,20 @@ export const LoginForm: React.FC = () => {
     formState: { isValid },
   } = form;
 
-  const navigateToHome = () => {
-    navigate("/home", {
-      preventScrollReset: true,
-      replace: true,
-      unstable_viewTransition: true,
-      relative: "path",
-    });
-  };
+  const { user, isLoading, login } = useAuth();
+
+  useEffect(() => {
+    if (user) {
+      navigate("/home");
+    }
+  }, [user, navigate]);
 
   return (
     <Form {...form}>
       <form
         id="form-signup"
         className="w-full flex flex-col items-start justify-center p-6 border rounded-md space-y-8 lg:w-1/2 bg-background xl:max-w-lg animate-slide-right"
-        onSubmit={handleSubmit(navigateToHome)}
+        onSubmit={handleSubmit(login)}
       >
         <span className="text-2xl font-semibold">Entrar</span>
         <div
@@ -104,6 +105,7 @@ export const LoginForm: React.FC = () => {
           </Link>
           <Button
             disabled={!isValid}
+            loading={isLoading}
             type="submit"
           >
             Entrar

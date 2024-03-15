@@ -15,3 +15,9 @@ export interface User {
   createdAt: string;
   updatedAt: string;
 }
+
+export interface LoginResponse {
+  message: string;
+  user: User;
+  token: string;
+}

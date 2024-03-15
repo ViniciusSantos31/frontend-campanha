@@ -8,6 +8,7 @@ import { useCallback, useEffect, useState } from "react";
 import { toast } from "sonner";
 
 import NotificationAudio from "@assets/sounds/notification.mp3";
+import { getFallbackAvatar } from "@utils/getFallbackAvatar";
 
 export const HomeProvider: React.FC = () => {
   const [online, setOnline] = useState<boolean>(false);
@@ -140,7 +141,9 @@ const AvatarStatus: React.FC<{ online: boolean }> = ({ online }) => {
         )}
       >
         <AvatarImage src={user?.avatar_url} />
-        <AvatarFallback className="text-4xl font-bold">VS</AvatarFallback>
+        <AvatarFallback className="text-4xl font-bold">
+          {user && getFallbackAvatar(user)}
+        </AvatarFallback>
       </Avatar>
     </div>
   );

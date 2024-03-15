@@ -35,24 +35,24 @@ function Root() {
         path="signup"
         element={<SignUp />}
       />
-      <Route
-        path="*"
-        element={<Login />}
-      />
       <Route path="/recovery">
         <Route
           path="request"
           element={<RequestCode />}
         />
         <Route
-          path="confirm"
-          element={<ConfirmCode />}
-        />
-        <Route
           path="password"
           element={<NewPassword />}
         />
+        <Route
+          path="confirm/:key"
+          element={<ConfirmCode />}
+        />
       </Route>
+      <Route
+        path="*"
+        element={<Login />}
+      />
     </Routes>
   );
 }

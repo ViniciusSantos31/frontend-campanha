@@ -6,13 +6,15 @@ import {
   DialogTitle,
 } from "@components/ui/dialog";
 import { useAuth } from "@hooks/useAuth";
+import { getFallbackAvatar } from "@utils/getFallbackAvatar";
 import {
   IEditProfileSchema,
   editProfileResolver,
 } from "@validations/editProfile";
 import { User } from "lucide-react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { Avatar, AvatarImage } from "../ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Button } from "../ui/button";
 import {
   Form,
@@ -26,9 +28,11 @@ import { Input } from "../ui/input";
 const EditProfile: React.FC = () => {
   const { user } = useAuth();
 
+  const [imagePreview, setImagePreview] = useState<File | null>(null);
+
   const form = useForm<IEditProfileSchema>({
     resolver: editProfileResolver,
-    mode: "all",
+    mode: "onChange",
     defaultValues: {
       name: `${user?.firstName} ${user?.lastName}` ?? "",
       email: user?.email ?? "",
@@ -55,15 +59,25 @@ const EditProfile: React.FC = () => {
             <FormField
               name="avatar"
               control={control}
-              render={() => (
+              render={({ field }) => (
                 <FormItem>
                   <FormControl>
                     <div className="flex items-center space-x-4 mb-2">
-                      <Avatar className="size-1/4">
-                        <AvatarImage
-                          src="https://avatars.githubusercontent.com/u/41171735?v=4"
-                          alt="avatar image upload"
-                        />
+                      <Avatar className="size-24">
+                        {imagePreview ? (
+                          <AvatarImage
+                            src={URL.createObjectURL(imagePreview)}
+                            alt="avatar image upload"
+                          />
+                        ) : (
+                          <AvatarImage
+                            src={user?.avatar_url}
+                            alt="avatar image"
+                          />
+                        )}
+                        <AvatarFallback className="h-full w-full">
+                          {user && getFallbackAvatar(user)}
+                        </AvatarFallback>
                       </Avatar>
                       <div className="grid w-full items-center">
                         <Input
@@ -71,6 +85,11 @@ const EditProfile: React.FC = () => {
                           label="Avatar"
                           type="file"
                           accept="image/*"
+                          {...field}
+                          onChange={(e) => {
+                            field.onChange(e);
+                            setImagePreview(e.target.files?.[0] ?? null);
+                          }}
                         />
                         <FormMessage />
                       </div>
@@ -123,7 +142,7 @@ const EditProfile: React.FC = () => {
                 Cancel
               </Button>
             </DialogClose>
-            <Button>Salvar</Button>
+            <Button className="mb-2 lg:mb-0">Salvar</Button>
           </DialogFooter>
         </form>
       </Form>

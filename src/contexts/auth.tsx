@@ -1,5 +1,9 @@
 import { User } from "@/types/user";
-import { createContext } from "react";
+import { ILoginSchema } from "@validations/login";
+import { createContext, useState } from "react";
+import { login, logout } from "services/auth";
+
+import { useAuthStore } from "store";
 
 type AuthProviderProps = {
   children: React.ReactNode;
@@ -7,35 +11,48 @@ type AuthProviderProps = {
 
 type AuthProviderState = {
   user: User | null;
+  isLoading?: boolean;
+  login: (data: ILoginSchema) => void;
+  logout: () => void;
 };
 
 const initialState: AuthProviderState = {
   user: null,
   isAuthenticated: false,
+  isLoading: false,
+  login: () => {},
+  logout: () => {},
 } as AuthProviderState;
 
 export const AuthContext = createContext<AuthProviderState>(initialState);
 
 export function AuthProvider({ children }: AuthProviderProps) {
-  const user: User = {
-    uuid: "1",
-    email: "jondoe@email.com",
-    firstName: "John",
-    lastName: "Doe",
-    userType: "REQUESTER",
-    avatar_url: "https://avatars.githubusercontent.com/u/41171735?v=4",
-    company: "Company",
-    cpf: "12345678900",
-    doc: "12345678900",
-    phone: "12345678900",
-    createdAt: "2021-08-01T00:00:00.000Z",
-    status: "ACTIVE",
-    token_jwt: "token",
-    updatedAt: "2021-08-01T00:00:00.000Z",
-    watcher_id: "1",
+  const { user, saveUser, deleteUser } = useAuthStore((state) => state);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const submitLogin = async (data: ILoginSchema) => {
+    try {
+      setIsLoading(true);
+      const response = await login(data);
+
+      if (response) {
+        saveUser(response.user);
+      }
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleLogout = () => {
+    logout();
+    deleteUser();
   };
 
   return (
-    <AuthContext.Provider value={{ user }}>{children}</AuthContext.Provider>
+    <AuthContext.Provider
+      value={{ user, login: submitLogin, logout: handleLogout, isLoading }}
+    >
+      {children}
+    </AuthContext.Provider>
   );
 }

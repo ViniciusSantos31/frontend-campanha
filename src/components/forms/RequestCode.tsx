@@ -31,10 +31,8 @@ export const RequestCodeForm: React.FC = () => {
   } = form;
 
   const navigateToHome = () => {
-    navigate("/recovery/confirm", {
-      preventScrollReset: true,
+    navigate("/recovery/confirm/123adsjkasdh982374", {
       replace: true,
-      unstable_viewTransition: true,
       relative: "path",
     });
   };

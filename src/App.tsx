@@ -9,7 +9,7 @@ function App() {
   return (
     <div className="w-screen h-screen bg-background">
       <Toaster
-        position="bottom-center"
+        position="top-right"
         duration={5000}
       />
       <RoutesApp />

@@ -3,7 +3,7 @@ import { ILoginSchema } from "@validations/login";
 import { createContext, useState } from "react";
 import { login, logout } from "services/auth";
 
-import { useAuthStore } from "store";
+import { useAuthStore } from "store/auth";
 
 type AuthProviderProps = {
   children: React.ReactNode;

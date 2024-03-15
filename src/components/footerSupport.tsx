@@ -10,7 +10,6 @@ export const FooterSupport: React.FC<HTMLAttributes<HTMLDivElement>> = ({
   className,
   ...rest
 }) => {
-  console.log("version", version);
   return (
     <footer
       className={cn(

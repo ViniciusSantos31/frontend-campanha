@@ -1,15 +1,33 @@
 import { ProconLogo } from "@assets/procon-logo";
 import { Toaster } from "@components/ui/sonner";
+import { useAuth } from "@hooks/useAuth";
 import { Loader } from "lucide-react";
-import { lazy } from "react";
+import { lazy, useEffect } from "react";
+import { api } from "services/api";
+import { queryClient } from "services/queryClient";
 
 const RoutesApp = lazy(() => import("./routes"));
 
 function App() {
+  const { user } = useAuth();
+
+  const iamAlive = () => {
+    if (!user) return;
+    api.post("/api/imAlive");
+    queryClient.invalidateQueries({ queryKey: ["providers"] });
+  };
+
+  useEffect(() => {
+    const interval = setInterval(iamAlive, 1000 * 2);
+
+    return () => clearInterval(interval);
+  });
+
   return (
     <div className="w-screen h-screen bg-background">
       <Toaster
         position="top-right"
+        closeButton
         duration={5000}
       />
       <RoutesApp />

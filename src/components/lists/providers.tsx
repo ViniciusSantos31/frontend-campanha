@@ -10,6 +10,13 @@ import { StatusBadge, StatusTag } from "../status";
 import { Skeleton } from "../ui/skeleton";
 
 const ListProviders: React.FC<ListProviderProps> = ({ providers, loading }) => {
+  const statusMap: Record<string, number> = {
+    AVAILABLE: 1,
+    PAUSED: 2,
+    BUSY: 3,
+    OFFLINE: 4,
+  };
+
   return (
     <ul className="w-full space-y-2.5 delay-75">
       {loading
@@ -21,12 +28,16 @@ const ListProviders: React.FC<ListProviderProps> = ({ providers, loading }) => {
                 className="w-full h-28 md:h-24 delay-75"
               />
             ))
-        : providers.map((provider) => (
-            <ProviderItem
-              key={`provider-list-item-${provider.id}`}
-              provider={provider}
-            />
-          ))}
+        : providers
+            .sort((a, b) =>
+              statusMap[a.status] < statusMap[b.status] ? -1 : 1
+            )
+            .map((provider) => (
+              <ProviderItem
+                key={`provider-list-item-${provider.uuid}`}
+                provider={provider}
+              />
+            ))}
     </ul>
   );
 };
@@ -40,21 +51,23 @@ const ProviderItem: React.FC<ProviderProps> = ({ provider }) => {
     <li
       className={cn(
         "flex flex-col items-start justify-center space-y-4 px-6 border py-6 rounded-md md:flex-row md:items-center md:justify-between md:space-y-0",
-        provider.status === "OFF" && "opacity-75"
+        provider.status === "OFFLINE" && "opacity-75"
       )}
     >
       <div className="flex space-x-2.5 md:flex-1">
         <Avatar className="backdrop-grayscale">
           <AvatarImage
-            className={`${provider.status === "OFF" ? "grayscale" : ""}`}
-            src={provider.avatar}
+            className={`${provider.status === "OFFLINE" ? "grayscale" : ""}`}
+            src={provider.avatar_url}
           />
           <AvatarFallback>VS</AvatarFallback>
         </Avatar>
         <div>
           <div className="flex items-center gap-2">
-            <p className="font-sans font-medium text-sm">{provider.name}</p>
-            {provider.status === "ON" && (
+            <p className="font-sans font-medium text-sm">
+              {`${provider.firstName} ${provider.lastName}`}
+            </p>
+            {provider.status === "AVAILABLE" && (
               <StatusBadge status={provider.status} />
             )}
           </div>

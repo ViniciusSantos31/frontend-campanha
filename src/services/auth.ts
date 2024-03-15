@@ -47,6 +47,7 @@ async function loginWithToken(token: string) {
 }
 
 async function logout() {
+  await api.post("/api/logout");
   cookie.destroy(null, "@campanha/auth");
 }
 

@@ -1,10 +1,11 @@
-export type Provider = {
-  id: string;
-  name: string;
-  avatar: string;
-  email: string;
-  doc: string;
-  status: "ON" | "OFF" | "WAITING" | "BUSY";
+import { User } from "./user";
+
+export type Provider = User & {
+  status: "AVAILABLE" | "OFFLINE" | "PAUSED" | "BUSY";
+};
+
+export type ProviderListResponse = {
+  users: Provider[];
 };
 
 export type ListProviderProps = {

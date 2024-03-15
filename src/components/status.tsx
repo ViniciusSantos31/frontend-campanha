@@ -9,24 +9,26 @@ import { CalendarX, Pause, RadioIcon, WifiOff } from "lucide-react";
 import { ReactElement, cloneElement } from "react";
 
 interface StatusProps extends React.HTMLAttributes<HTMLDivElement> {
-  status: "ON" | "OFF" | "WAITING" | "BUSY";
+  status: "AVAILABLE" | "OFFLINE" | "PAUSED" | "BUSY";
 }
 
-const getStyleByStatus = (status: "ON" | "OFF" | "WAITING" | "BUSY") => {
+const getStyleByStatus = (
+  status: "AVAILABLE" | "OFFLINE" | "PAUSED" | "BUSY"
+) => {
   switch (status) {
-    case "ON":
+    case "AVAILABLE":
       return {
         text: "text-emerald-800 dark:text-emerald-400",
         bg: "bg-emerald-200 dark:bg-emerald-900",
         fg: "bg-emerald-600",
       };
-    case "OFF":
+    case "OFFLINE":
       return {
         text: "text-slate-800 dark:text-slate-400",
         bg: "bg-slate-200 dark:bg-slate-900 dark:border",
         fg: "bg-slate-600",
       };
-    case "WAITING":
+    case "PAUSED":
       return {
         text: "text-cyan-800 dark:text-cyan-400",
         bg: "bg-cyan-200 dark:bg-cyan-900 dark:border",
@@ -41,13 +43,15 @@ const getStyleByStatus = (status: "ON" | "OFF" | "WAITING" | "BUSY") => {
   }
 };
 
-const getLabelByStatus = (status: "ON" | "OFF" | "WAITING" | "BUSY") => {
+const getLabelByStatus = (
+  status: "AVAILABLE" | "OFFLINE" | "PAUSED" | "BUSY"
+) => {
   switch (status) {
-    case "ON":
+    case "AVAILABLE":
       return "Disponível";
-    case "OFF":
+    case "OFFLINE":
       return "Indisponível";
-    case "WAITING":
+    case "PAUSED":
       return "Pausado";
     case "BUSY":
       return "Ocupado";
@@ -55,9 +59,9 @@ const getLabelByStatus = (status: "ON" | "OFF" | "WAITING" | "BUSY") => {
 };
 
 const icons: Record<StatusProps["status"], ReactElement> = {
-  ON: <RadioIcon data-testid="status-on-icon" />,
-  OFF: <WifiOff data-testid="status-off-icon" />,
-  WAITING: <Pause data-testid="status-waiting-icon" />,
+  AVAILABLE: <RadioIcon data-testid="status-on-icon" />,
+  OFFLINE: <WifiOff data-testid="status-off-icon" />,
+  PAUSED: <Pause data-testid="status-waiting-icon" />,
   BUSY: <CalendarX data-testid="status-busy-icon" />,
 };
 
@@ -72,7 +76,7 @@ const StatusBadge: React.FC<StatusProps> = ({ status, className, ...rest }) => {
           >
             {cloneElement(icons[status], {
               size: 16,
-              className: `${status === "ON" && "animate-pulse"} ${
+              className: `${status === "AVAILABLE" && "animate-pulse"} ${
                 getStyleByStatus(status).text
               }`,
             })}
@@ -106,7 +110,7 @@ const StatusTag: React.FC<StatusProps> = ({ status, className, ...rest }) => {
       >
         {cloneElement(icons[status], {
           size: 14,
-          className: `mr-1 ${status === "ON" && "animate-pulse"}`,
+          className: `mr-1 ${status === "AVAILABLE" && "animate-pulse"}`,
         })}
         {getLabelByStatus(status)}
       </p>

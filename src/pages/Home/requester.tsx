@@ -3,7 +3,12 @@ import WaitingQueueAlert from "@components/dialogs/waitingQueue";
 import { Header } from "@components/header";
 import ListProviders from "@components/lists/providers";
 import { Button } from "@components/ui/button";
-import { AlertOctagon, LibrarySquare, RefreshCcwIcon } from "lucide-react";
+import {
+  AlertOctagon,
+  LibrarySquare,
+  Loader2,
+  RefreshCcwIcon,
+} from "lucide-react";
 
 import { useQuery } from "@tanstack/react-query";
 import { list } from "services/providers";
@@ -14,12 +19,13 @@ export const HomeRequester: React.FC = () => {
     data: providers,
     isLoading,
     isLoadingError,
+    isRefetching,
   } = useQuery<Provider[] | null>(
     {
       queryKey: ["providers"],
       queryFn: list,
-      staleTime: 1000 * 60 * 5, // 30 seconds
-      refetchOnWindowFocus: false,
+      staleTime: 1000 * 60 * 5, // 30 minutes
+      refetchInterval: 1000 * 30, // 1 minutes
     },
     queryClient
   );
@@ -42,7 +48,7 @@ export const HomeRequester: React.FC = () => {
           >
             <h1 className="flex items-center font-sans font-semibold mb-4 text-xl animate-slide-left">
               Teleconsultores
-              {/* {isRefetching && <Loader2 className="ml-2 size-6 animate-spin" />} */}
+              {isRefetching && <Loader2 className="ml-2 size-6 animate-spin" />}
             </h1>
             <ListProviders
               loading={isLoading}

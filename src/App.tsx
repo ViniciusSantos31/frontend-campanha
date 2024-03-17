@@ -1,27 +1,26 @@
 import { ProconLogo } from "@assets/procon-logo";
 import { Toaster } from "@components/ui/sonner";
-import { useAuth } from "@hooks/useAuth";
 import { Loader } from "lucide-react";
-import { lazy, useEffect } from "react";
-import { api } from "services/api";
-import { queryClient } from "services/queryClient";
+import { lazy } from "react";
+
+import "./services/socket";
 
 const RoutesApp = lazy(() => import("./routes"));
 
 function App() {
-  const { user } = useAuth();
+  // const { user } = useAuth();
 
-  const iamAlive = () => {
-    if (!user) return;
-    api.post("/api/imAlive");
-    queryClient.invalidateQueries({ queryKey: ["providers"] });
-  };
+  // const iamAlive = () => {
+  //   if (!user) return;
+  //   api.post("/api/imAlive");
+  //   queryClient.invalidateQueries({ queryKey: ["providers"] });
+  // };
 
-  useEffect(() => {
-    const interval = setInterval(iamAlive, 1000 * 2);
+  // useEffect(() => {
+  //   const interval = setInterval(iamAlive, 1000 * 2);
 
-    return () => clearInterval(interval);
-  });
+  //   return () => clearInterval(interval);
+  // });
 
   return (
     <div className="w-screen h-screen bg-background">

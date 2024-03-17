@@ -13,7 +13,7 @@ async function login({
   password,
 }: LoginData): Promise<LoginResponse | undefined> {
   try {
-    const response = await api.post<LoginResponse>("/api/login", {
+    const response = await api.post<LoginResponse>("/login", {
       email,
       password,
     });
@@ -47,7 +47,7 @@ async function loginWithToken(token: string) {
 }
 
 async function logout() {
-  await api.post("/api/logout");
+  await api.head("/logout");
   cookie.destroy(null, "@campanha/auth");
 }
 

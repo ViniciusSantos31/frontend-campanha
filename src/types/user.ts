@@ -1,5 +1,5 @@
 export interface User {
-  uuid: string;
+  id: string;
   firstName: string;
   lastName: string;
   phone: string;
@@ -8,7 +8,7 @@ export interface User {
   email: string;
   userType: "REQUESTER" | "PROVIDER";
   status: string;
-  company: string;
+  companyId: string;
   token_jwt: string;
   avatar_url: string;
   watcher_id: string;
@@ -17,7 +17,6 @@ export interface User {
 }
 
 export interface LoginResponse {
-  message: string;
   user: User;
   token: string;
 }

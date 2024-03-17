@@ -3,24 +3,21 @@ import { Toaster } from "@components/ui/sonner";
 import { Loader } from "lucide-react";
 import { lazy } from "react";
 
+import { api } from "services/api";
 import "./services/socket";
+import socket from "./services/socket";
 
 const RoutesApp = lazy(() => import("./routes"));
 
 function App() {
-  // const { user } = useAuth();
-
-  // const iamAlive = () => {
-  //   if (!user) return;
-  //   api.post("/api/imAlive");
-  //   queryClient.invalidateQueries({ queryKey: ["providers"] });
-  // };
-
-  // useEffect(() => {
-  //   const interval = setInterval(iamAlive, 1000 * 2);
-
-  //   return () => clearInterval(interval);
-  // });
+  window.addEventListener(
+    "unload",
+    () => {
+      socket.emit("user_close_tab");
+      api.post("/users/providers/status");
+    },
+    false
+  );
 
   return (
     <div className="w-screen h-screen bg-background">

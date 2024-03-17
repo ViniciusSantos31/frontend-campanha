@@ -12,62 +12,6 @@ export const HomeProvider: React.FC = () => {
   const { handleCreateRoom, isLoading } = useAvailability();
   const { user: provider } = useAuth();
 
-  // const toggleStatus = () => {
-  //   setLoading(true);
-  //   setTimeout(() => {
-  //     setOnline((prev) => !prev);
-  //     setLoading(false);
-  //   }, Math.random() * 1000 + 500);
-  // };
-
-  // const receiveCall = useCallback(async () => {
-  //   await new Promise((resolve) =>
-  //     setTimeout(resolve, Math.random() * 5000 + 3000)
-  //   );
-
-  //   const audioElement = new Audio(NotificationAudio);
-
-  //   toast.success("Você tem um novo chamado!", {
-  //     description: "Clique para atender",
-  //     duration: 5000,
-  //     onAutoClose() {
-  //       toast.error("Chamado ignorado!", {
-  //         duration: 2000,
-  //       });
-  //     },
-  //     cancel: {
-  //       label: "Ignorar",
-  //       onClick: () => {
-  //         toast.error("Chamado ignorado!", {
-  //           duration: 2000,
-  //         });
-  //       },
-  //     },
-  //     action: {
-  //       label: "Atender",
-  //       onClick: () => {
-  //         toast.loading("Chamado atendido!", {
-  //           description: "Você será redirecionado para a conferência.",
-  //         });
-
-  //         new Promise((resolve) =>
-  //           setTimeout(resolve, Math.random() * 5000 + 3000)
-  //         ).then(() => {
-  //           window.location.href = "/";
-  //         });
-  //       },
-  //     },
-  //   });
-
-  //   audioElement.play();
-  // }, []);
-
-  // useEffect(() => {
-  //   if (online) {
-  //     receiveCall();
-  //   }
-  // }, [online, receiveCall]);
-
   return (
     <div className="w-screen h-screen flex flex-col items-center">
       <Header />

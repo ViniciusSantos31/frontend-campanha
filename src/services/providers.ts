@@ -6,4 +6,8 @@ async function list(): Promise<Provider[] | null> {
   return response.data.users;
 }
 
-export { list };
+async function toggleStatus(): Promise<void> {
+  await api.patch<ProviderListResponse>("/users/provider/status");
+}
+
+export { list, toggleStatus };

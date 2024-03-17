@@ -23,4 +23,11 @@ socket.on("user_logout", () => {
   });
 });
 
+socket.on("user_status_changed", (id) => {
+  queryClient.invalidateQueries({
+    queryKey: ["providers"],
+  });
+  console.log("user_status_changed", id);
+});
+
 export default socket;

@@ -1,6 +1,6 @@
 import { useState } from "react";
+import { toggleStatus } from "services/providers";
 import { queryClient } from "services/queryClient";
-import { createRoom, releaseRoom } from "services/room";
 import { toast } from "sonner";
 import { useAuthStore } from "store/auth";
 
@@ -16,11 +16,11 @@ export const useAvailability = (): AvailabilityReturn => {
   const handleCreateRoom = async () => {
     setIsLoading(true);
     try {
+      await toggleStatus();
+
       if (user?.status === "AVAILABLE") {
-        await releaseRoom();
         saveUser({ ...user, status: "OFFLINE" });
       } else {
-        await createRoom();
         if (user) saveUser({ ...user, status: "AVAILABLE" });
       }
       queryClient.invalidateQueries({

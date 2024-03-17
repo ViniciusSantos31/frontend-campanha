@@ -4,7 +4,7 @@ import { toast } from "sonner";
 import { loginWithToken } from "./auth";
 
 export const api = axios.create({
-  baseURL: "http://localhost:3333",
+  baseURL: process.env.BACKEND_URL ?? "http://localhost:3333",
 });
 
 api.interceptors.request.use(async (config) => {

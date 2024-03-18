@@ -6,7 +6,7 @@ describe("StatusTag component", () => {
     const { getByTestId } = render(
       <StatusTag
         data-testid="status-tag-test"
-        status="ON"
+        status="AVAILABLE"
       />
     );
 
@@ -14,13 +14,13 @@ describe("StatusTag component", () => {
   });
 
   it("should render the status tag with the correct text", () => {
-    const { getByText } = render(<StatusTag status="ON" />);
+    const { getByText } = render(<StatusTag status="AVAILABLE" />);
 
     expect(getByText("Disponível")).toBeInTheDocument();
   });
 
   it("should render with the correct text when status is OFF", () => {
-    const { getByText } = render(<StatusTag status="OFF" />);
+    const { getByText } = render(<StatusTag status="AVAILABLE" />);
 
     expect(getByText("Indisponível")).toBeInTheDocument();
   });
@@ -32,7 +32,7 @@ describe("StatusTag component", () => {
   });
 
   it("should render with the correct text when status is WAITING", () => {
-    const { getByText } = render(<StatusTag status="WAITING" />);
+    const { getByText } = render(<StatusTag status="PAUSED" />);
 
     expect(getByText("Pausado")).toBeInTheDocument();
   });
@@ -41,7 +41,7 @@ describe("StatusTag component", () => {
     const { getByTestId } = render(
       <StatusTag
         data-testid="status-tag-test"
-        status="ON"
+        status="AVAILABLE"
       />
     );
 
@@ -52,7 +52,7 @@ describe("StatusTag component", () => {
     const { getByTestId } = render(
       <StatusTag
         data-testid="status-tag-test"
-        status="OFF"
+        status="OFFLINE"
       />
     );
 
@@ -74,7 +74,7 @@ describe("StatusTag component", () => {
     const { getByTestId } = render(
       <StatusTag
         data-testid="status-tag-test"
-        status="WAITING"
+        status="PAUSED"
       />
     );
 

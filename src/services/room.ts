@@ -10,7 +10,7 @@ async function createRoom(): Promise<CreateRoomResponse> {
 }
 
 async function releaseRoom(): Promise<void> {
-  const userId = useAuthStore.getState().user?.uuid;
+  const userId = useAuthStore.getState().user?.id;
 
   await api.post(`/api/releaseRoom/${userId}`);
 }

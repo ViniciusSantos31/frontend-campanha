@@ -34,7 +34,7 @@ const ListProviders: React.FC<ListProviderProps> = ({ providers, loading }) => {
             )
             .map((provider) => (
               <ProviderItem
-                key={`provider-list-item-${provider.uuid}`}
+                key={`provider-list-item-${provider.id}`}
                 provider={provider}
               />
             ))}

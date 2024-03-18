@@ -14,10 +14,24 @@ import {
 import { Input } from "../ui/input";
 import { Progress } from "../ui/progress";
 
+import { useHookFormMask } from "use-mask-input";
+import { Options as MaskOptions } from "use-mask-input/src/inputmask.types";
+
+const maskOptions: MaskOptions = {
+  showMaskOnHover: false,
+  showMaskOnFocus: false,
+  removeMaskOnSubmit: true,
+  unmaskAsNumber: true,
+  autoUnmask: true,
+};
+
 export const SignUpForm: React.FC = () => {
   const form = useForm<ISignUpSchema>({
     resolver: signUpResolver,
-    mode: "all",
+    mode: "onChange",
+    defaultValues: {
+      phone: "82088717",
+    },
   });
 
   const {
@@ -25,7 +39,10 @@ export const SignUpForm: React.FC = () => {
     handleSubmit,
     watch,
     formState: { isValid },
+    register,
   } = form;
+
+  const registerWithMask = useHookFormMask(register);
 
   const password = watch("password");
 
@@ -61,6 +78,7 @@ export const SignUpForm: React.FC = () => {
                     placeholder="Nome completo"
                     type="text"
                     className="w-full"
+                    autoFocus
                     {...field}
                   />
                 </FormControl>
@@ -82,6 +100,11 @@ export const SignUpForm: React.FC = () => {
                     type="text"
                     className="w-full"
                     {...field}
+                    {...registerWithMask(
+                      "personal_doc",
+                      ["999.999.999-99", "99.999.999/9999-99"],
+                      maskOptions
+                    )}
                   />
                 </FormControl>
                 <FormMessage />
@@ -141,6 +164,17 @@ export const SignUpForm: React.FC = () => {
                     type="tel"
                     className="w-full"
                     {...field}
+                    {...registerWithMask(
+                      "phone",
+                      [
+                        "9999-9999",
+                        "99999-9999",
+                        "9 9999-9999",
+                        "(99) 9999-9999",
+                        "(99) 99999-9999",
+                      ],
+                      maskOptions
+                    )}
                   />
                 </FormControl>
                 <FormMessage />
@@ -195,7 +229,7 @@ export const SignUpForm: React.FC = () => {
           <Link
             to="/"
             replace
-            className="flex items-center font-sans text-sm underline cursor-pointer transition-colors font-medium hover:text-slate-600"
+            className="flex items-center font-sans text-sm underline cursor-pointer transition-colors font-medium hover:text-gray-400"
           >
             Entrar na plataforma
           </Link>

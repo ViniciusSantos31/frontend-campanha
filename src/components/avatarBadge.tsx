@@ -15,6 +15,8 @@ import {
 } from "@components/ui/dropdown-menu";
 import { useAuth } from "@hooks/useAuth";
 import { useTheme } from "@hooks/useTheme";
+import { getFallbackAvatar } from "@utils/getFallbackAvatar";
+import { Loading } from "App";
 import { HelpCircle, LogOutIcon, Monitor, Moon, Sun, User } from "lucide-react";
 import { Link } from "react-router-dom";
 import EditProfile from "./dialogs/editProfile";
@@ -22,40 +24,40 @@ import EditProfile from "./dialogs/editProfile";
 export const AvatarBadge: React.FC = () => {
   const { user } = useAuth();
 
-  const getFallbackAvatar = () => {
-    const [firstName, lastName] = user?.name.split(" ") || ["", ""];
+  const fullName = user?.firstName + " " + user?.lastName;
 
-    return `${firstName.charAt(0)}${lastName.charAt(0)}`;
-  };
+  if (!user) return <Loading />;
 
   return (
     <Dialog>
       <DropdownMenu>
-        <DropdownMenuTrigger
-          data-testid="trigger-dropdown-menu-avatar-badge"
-          asChild
-        >
-          <button className="w-auto gap-3 flex items-center p-2 rounded-md cursor-pointer hover:bg-slate-50 dark:hover:bg-accent">
+        <DropdownMenuTrigger asChild>
+          <button
+            data-testid="trigger-dropdown-menu-avatar-badge"
+            className="w-auto group gap-3 flex items-center p-2 rounded-md cursor-pointer hover:bg-slate-50 dark:hover:bg-accent transition-colors"
+          >
             <div className="text-right hidden sm:block">
-              <p className="text-sm font-sans font-semibold">{user?.name}</p>
+              <p className="text-sm font-sans font-semibold">{fullName}</p>
               <p className="text-xs font-sans font-medium text-slate-400">
-                {user?.role === "PROVIDER" ? "Consultor" : "Solicitante"}
+                {user?.userType === "PROVIDER" ? "Consultor" : "Solicitante"}
               </p>
             </div>
             <Avatar className="size-10">
               <AvatarImage
                 data-testid="avatar-badge-image"
-                src={user?.avatar}
+                src={user?.avatar_url}
               />
-              <AvatarFallback data-testid="avatar-badge-fallback">
-                {getFallbackAvatar()}
+              <AvatarFallback
+                data-testid="avatar-badge-fallback"
+                className="dark:group-hover:bg-zinc-700 group-hover:bg-zinc-200 transition-colors"
+              >
+                {user && getFallbackAvatar(user)}
               </AvatarFallback>
             </Avatar>
           </button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent className="min-w-40">
-          <DropdownContent />
-        </DropdownMenuContent>
+        <DropdownContent />
+        <DropdownMenuPortal />
       </DropdownMenu>
       <DialogContent>
         <EditProfile />
@@ -66,7 +68,9 @@ export const AvatarBadge: React.FC = () => {
 
 const DropdownContent: React.FC = () => {
   const { theme, setTheme } = useTheme();
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
+
+  const fullName = user?.firstName + " " + user?.lastName;
 
   const getIconTheme = () => {
     if (theme === "dark") {
@@ -78,13 +82,8 @@ const DropdownContent: React.FC = () => {
   };
 
   return (
-    <>
-      <DropdownMenuLabel
-        data-testid="dropdown-menu-content-avatar-badge"
-        className="mr-8"
-      >
-        {user?.name}
-      </DropdownMenuLabel>
+    <DropdownMenuContent className="min-w-40">
+      <DropdownMenuLabel className="mr-8">{fullName}</DropdownMenuLabel>
       <DropdownMenuSeparator />
       <DialogTrigger asChild>
         <DropdownMenuItem>
@@ -132,11 +131,12 @@ const DropdownContent: React.FC = () => {
         <Link
           to="/"
           replace
+          onClick={logout}
         >
           <LogOutIcon size={16} />
           <p>Sair</p>
         </Link>
       </DropdownMenuItem>
-    </>
+    </DropdownMenuContent>
   );
 };

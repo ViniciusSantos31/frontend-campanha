@@ -67,9 +67,5 @@
     *::-webkit-scrollbar-thumb {
       @apply bg-foreground rounded-full;
     }
-
-    #procon-logo svg g path {
-      @apply fill-foreground;
-    }
   }
 }

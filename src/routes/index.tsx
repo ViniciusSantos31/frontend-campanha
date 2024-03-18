@@ -1,5 +1,8 @@
 import { Home } from "@pages/Home";
 import { Login } from "@pages/Login";
+import { ConfirmCode } from "@pages/RecoveryPassword/ConfirmCode";
+import { NewPassword } from "@pages/RecoveryPassword/NewPassword";
+import { RequestCode } from "@pages/RecoveryPassword/RequestCode";
 import { SignUp } from "@pages/SignUp";
 import {
   createBrowserRouter,
@@ -32,10 +35,23 @@ function Root() {
         path="signup"
         element={<SignUp />}
       />
+      <Route path="/recovery">
+        <Route
+          path="request"
+          element={<RequestCode />}
+        />
+        <Route
+          path="password"
+          element={<NewPassword />}
+        />
+        <Route
+          path="confirm/:key"
+          element={<ConfirmCode />}
+        />
+      </Route>
       <Route
         path="*"
         element={<Login />}
-        hydrateFallbackElement={<Login />}
       />
     </Routes>
   );

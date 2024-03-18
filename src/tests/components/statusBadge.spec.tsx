@@ -5,7 +5,7 @@ describe("StatusBadge component", () => {
   it("should render the status badge", () => {
     const { getByTestId } = render(
       <StatusBadge
-        status="ON"
+        status="AVAILABLE"
         data-testid="status-badge-test"
       />
     );
@@ -14,19 +14,19 @@ describe("StatusBadge component", () => {
   });
 
   it("should render with the correct status text when status is ON", () => {
-    const { getByTestId } = render(<StatusBadge status="ON" />);
+    const { getByTestId } = render(<StatusBadge status="AVAILABLE" />);
 
     expect(getByTestId("status-on-icon")).toBeInTheDocument();
   });
 
   it("should render with the correct status text when status is OFF", () => {
-    const { getByTestId } = render(<StatusBadge status="OFF" />);
+    const { getByTestId } = render(<StatusBadge status="OFFLINE" />);
 
     expect(getByTestId("status-off-icon")).toBeInTheDocument();
   });
 
   it("should render with the correct status text when status is WAITING", () => {
-    const { getByTestId } = render(<StatusBadge status="WAITING" />);
+    const { getByTestId } = render(<StatusBadge status="PAUSED" />);
 
     expect(getByTestId("status-waiting-icon")).toBeInTheDocument();
   });
@@ -38,7 +38,7 @@ describe("StatusBadge component", () => {
   });
 
   it("should render status ON & animation pulse", () => {
-    const { getByTestId } = render(<StatusBadge status="ON" />);
+    const { getByTestId } = render(<StatusBadge status="AVAILABLE" />);
 
     expect(getByTestId("status-on-icon")).toHaveClass("animate-pulse");
   });

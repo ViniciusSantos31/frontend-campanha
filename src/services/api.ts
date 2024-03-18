@@ -3,8 +3,13 @@ import cookie from "nookies";
 import { toast } from "sonner";
 import { loginWithToken } from "./auth";
 
+const ivDevMode = import.meta.env.DEV;
+const baseURL = ivDevMode
+  ? "http://localhost:3333"
+  : import.meta.env.VITE_BACKEND_URL;
+
 export const api = axios.create({
-  baseURL: import.meta.env.VITE_BACKEND_URL || "http://localhost:3333",
+  baseURL,
 });
 
 api.interceptors.request.use(async (config) => {

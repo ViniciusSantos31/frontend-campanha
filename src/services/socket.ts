@@ -1,7 +1,10 @@
 import io from "socket.io-client";
 import { queryClient } from "./queryClient";
 
-const socket = io(import.meta.env.WS_URL ?? "http://localhost:3000");
+const ivDevMode = import.meta.env.DEV;
+const wsURL = ivDevMode ? "http://localhost:3000" : import.meta.env.VITE_WS_URL;
+
+const socket = io(wsURL);
 
 socket.on("connect", () => {
   console.log("Conectado ao plantão");

@@ -1,7 +1,7 @@
 import io from "socket.io-client";
 import { queryClient } from "./queryClient";
 
-const socket = io(process.env.WS_URL ?? "http://localhost:3000");
+const socket = io(import.meta.env.WS_URL ?? "http://localhost:3000");
 
 socket.on("connect", () => {
   console.log("Conectado ao plantão");

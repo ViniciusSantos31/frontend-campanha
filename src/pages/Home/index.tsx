@@ -9,5 +9,7 @@ export const Home: React.FC = () => {
 
   if (!user || !getAuthToken()) return <Navigate to="/" />;
 
+  console.log("import.meta.env.BACKEND_URL", import.meta.env.MODE);
+
   return user?.userType === "PROVIDER" ? <HomeProvider /> : <HomeRequester />;
 };

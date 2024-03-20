@@ -71,7 +71,7 @@ const EditProfile: React.FC = () => {
                           />
                         ) : (
                           <AvatarImage
-                            src={user?.avatar_url}
+                            src={user?.avatarUrl}
                             alt="avatar image"
                           />
                         )}

@@ -58,7 +58,7 @@ const ProviderItem: React.FC<ProviderProps> = ({ provider }) => {
         <Avatar className="backdrop-grayscale">
           <AvatarImage
             className={`${provider.status === "OFFLINE" ? "grayscale" : ""}`}
-            src={provider.avatar_url}
+            src={provider.avatarUrl}
           />
           <AvatarFallback>VS</AvatarFallback>
         </Avatar>

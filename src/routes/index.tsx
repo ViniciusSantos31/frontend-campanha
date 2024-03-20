@@ -1,3 +1,4 @@
+import { Conference } from "@pages/Conference";
 import { Home } from "@pages/Home";
 import { Login } from "@pages/Login";
 import { ConfirmCode } from "@pages/RecoveryPassword/ConfirmCode";
@@ -49,6 +50,10 @@ function Root() {
           element={<ConfirmCode />}
         />
       </Route>
+      <Route
+        path="/conference/:short"
+        Component={Conference}
+      />
       <Route
         path="*"
         element={<Login />}

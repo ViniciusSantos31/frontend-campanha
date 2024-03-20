@@ -1,10 +1,10 @@
-export type Room = {
-  message: string;
-  sessionId: string;
-  auth: string;
+export type Conference = {
+  id: string;
+  short: string;
+  providerId: string;
+  status: "OPEN" | "FINISHED";
 };
 
-export type CreateRoomResponse = {
-  status: number;
-  data: Room;
+export type CreateConferenceResponse = {
+  conference: Conference;
 };

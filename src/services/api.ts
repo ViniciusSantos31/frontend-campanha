@@ -27,7 +27,7 @@ api.interceptors.response.use(
     return response;
   },
   (error) => {
-    if (!error.config.headers.Authorization) {
+    if (!error.config.headers.Authorization || error.response.status === 500) {
       toast.error("Sua sessão expirou. Faça login novamente.");
       window.location.href = "/";
       return Promise.reject(error);

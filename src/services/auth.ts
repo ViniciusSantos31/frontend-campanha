@@ -2,6 +2,7 @@ import { LoginResponse } from "@/types/user";
 import cookie from "nookies";
 import { toast } from "sonner";
 import { api } from "./api";
+import socket from "./socket";
 
 type LoginData = {
   email: string;
@@ -48,6 +49,7 @@ async function loginWithToken(token: string) {
 
 async function logout() {
   await api.head("/logout");
+  socket.disconnect();
   cookie.destroy(null, "@campanha/auth");
 }
 

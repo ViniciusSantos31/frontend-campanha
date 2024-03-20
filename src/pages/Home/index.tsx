@@ -1,15 +1,19 @@
 import { useAuth } from "@hooks/useAuth";
 import { getAuthToken } from "@utils/getToken";
+import { useEffect } from "react";
 import { Navigate } from "react-router-dom";
+import socket from "services/socket";
 import { HomeProvider } from "./provider";
 import { HomeRequester } from "./requester";
 
 export const Home: React.FC = () => {
   const { user } = useAuth();
 
-  if (!user || !getAuthToken()) return <Navigate to="/" />;
+  useEffect(() => {
+    socket.connect().emit("user_connected", { user });
+  }, [user]);
 
-  console.log("import.meta.env.BACKEND_URL", import.meta.env.MODE);
+  if (!user || !getAuthToken()) return <Navigate to="/" />;
 
   return user?.userType === "PROVIDER" ? <HomeProvider /> : <HomeRequester />;
 };

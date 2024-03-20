@@ -45,7 +45,7 @@ export const AvatarBadge: React.FC = () => {
             <Avatar className="size-10">
               <AvatarImage
                 data-testid="avatar-badge-image"
-                src={user?.avatar_url}
+                src={user?.avatarUrl}
               />
               <AvatarFallback
                 data-testid="avatar-badge-fallback"

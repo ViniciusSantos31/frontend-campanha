@@ -3,9 +3,9 @@ import { Toaster } from "@components/ui/sonner";
 import { Loader } from "lucide-react";
 import { lazy } from "react";
 
-import { api } from "services/api";
 import "./services/socket";
 import socket from "./services/socket";
+import { me } from "services/me";
 
 const RoutesApp = lazy(() => import("./routes"));
 
@@ -14,7 +14,14 @@ function App() {
     "unload",
     () => {
       socket.emit("user_close_tab");
-      api.post("/users/providers/status");
+    },
+    false
+  );
+
+  window.addEventListener(
+    "load",
+    () => {
+      me();
     },
     false
   );

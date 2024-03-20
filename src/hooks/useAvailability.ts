@@ -19,7 +19,7 @@ export const useAvailability = (): AvailabilityReturn => {
       await toggleStatus();
 
       if (user?.status === "AVAILABLE") {
-        saveUser({ ...user, status: "OFFLINE" });
+        saveUser({ ...user, status: "PAUSED" });
       } else {
         if (user) saveUser({ ...user, status: "AVAILABLE" });
       }
@@ -28,7 +28,7 @@ export const useAvailability = (): AvailabilityReturn => {
       });
     } catch {
       toast.error(
-        "Não foi possível criar a sala. Tente novamente mais tarde.",
+        "Não foi possível mudar a disponibilidade. Tente novamente mais tarde.",
         {
           description: "Se o erro persistir, entre em contato com o suporte.",
         }

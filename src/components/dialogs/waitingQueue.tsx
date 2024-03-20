@@ -9,13 +9,22 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@components/ui/alert-dialog";
+import { useQueue } from "@hooks/useQueue";
+import { useAuthStore } from "store/auth";
 import { Button } from "../ui/button";
 
 const WaitingQueueAlert: React.FC = () => {
+  const { joinQueue, leaveQueue, isLoading } = useQueue();
+  const { user } = useAuthStore();
+
   return (
-    <AlertDialog>
+    <AlertDialog open={!!user?.inQueueSince}>
       <AlertDialogTrigger asChild>
-        <Button className="h-10">
+        <Button
+          className="h-10"
+          loading={isLoading}
+          onClick={joinQueue}
+        >
           <p className="font-sans font-medium text-sm">
             Entrar na fila de espera
           </p>
@@ -33,10 +42,20 @@ const WaitingQueueAlert: React.FC = () => {
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel className="w-full bg-destructive hover:bg-destructive/90">
-            <p className="font-sans font-medium text-sm text-white">
+          <AlertDialogCancel
+            className="w-full bg-destructive hover:bg-destructive/90"
+            onClick={leaveQueue}
+            asChild
+          >
+            <Button
+              variant="destructive"
+              onClick={leaveQueue}
+              loading={isLoading}
+            >
               Sair da fila
-            </p>
+            </Button>
+            {/* <p className="font-sans font-medium text-sm text-white">
+            </p> */}
           </AlertDialogCancel>
         </AlertDialogFooter>
       </AlertDialogContent>

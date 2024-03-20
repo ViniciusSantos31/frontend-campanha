@@ -86,7 +86,7 @@ const AvatarStatus: React.FC = () => {
           user?.status === "AVAILABLE" && "grayscale-0 opacity-100"
         )}
       >
-        <AvatarImage src={user?.avatar_url} />
+        <AvatarImage src={user?.avatarUrl} />
         <AvatarFallback className="text-4xl font-bold">
           {user && getFallbackAvatar(user)}
         </AvatarFallback>

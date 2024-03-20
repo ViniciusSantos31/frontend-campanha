@@ -56,6 +56,11 @@
       @apply bg-background text-foreground transition-colors;
     }
 
+    iframe {
+      width: 100vw !important;
+      height: 100vh !important;
+    }
+
     *::-webkit-scrollbar {
       @apply w-1 p-1 h-1;
     }

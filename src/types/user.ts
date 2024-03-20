@@ -7,11 +7,12 @@ export interface User {
   doc: string;
   email: string;
   userType: "REQUESTER" | "PROVIDER";
-  status: string;
+  status: "AVAILABLE" | "OFFLINE" | "PAUSED" | "BUSY";
   companyId: string;
   token_jwt: string;
-  avatar_url: string;
+  avatarUrl: string;
   watcher_id: string;
+  inQueueSince: Date | null;
   createdAt: string;
   updatedAt: string;
 }

@@ -1,4 +1,5 @@
 import { Provider, ProviderListResponse } from "@/types/provider";
+import { useAuthStore } from "store/auth";
 import { api } from "./api";
 
 async function list(): Promise<Provider[] | null> {
@@ -7,7 +8,15 @@ async function list(): Promise<Provider[] | null> {
 }
 
 async function toggleStatus(): Promise<void> {
-  await api.patch<ProviderListResponse>("/users/provider/status");
+  await api.put<void>("/users/provider/status");
 }
 
-export { list, toggleStatus };
+async function makeProviderBusy(): Promise<void> {
+  const { user } = useAuthStore.getState();
+
+  await api.put<void>(`/users/${user?.id}`, {
+    status: "BUSY",
+  });
+}
+
+export { list, makeProviderBusy, toggleStatus };

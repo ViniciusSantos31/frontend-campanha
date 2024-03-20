@@ -3,13 +3,16 @@ import { Toaster } from "@components/ui/sonner";
 import { Loader } from "lucide-react";
 import { lazy } from "react";
 
+import { me } from "services/me";
+import { useAuthStore } from "store/auth";
 import "./services/socket";
 import socket from "./services/socket";
-import { me } from "services/me";
 
 const RoutesApp = lazy(() => import("./routes"));
 
 function App() {
+  const { user } = useAuthStore.getState();
+
   window.addEventListener(
     "unload",
     () => {
@@ -21,7 +24,7 @@ function App() {
   window.addEventListener(
     "load",
     () => {
-      me();
+      if (user) me();
     },
     false
   );

@@ -1,6 +1,8 @@
 import { Conference } from "@pages/Conference";
 import { Home } from "@pages/Home";
 import { Login } from "@pages/Login";
+import { NotFound } from "@pages/NotFound";
+import { RecoveryPassword } from "@pages/RecoveryPassword";
 import { ConfirmCode } from "@pages/RecoveryPassword/ConfirmCode";
 import { NewPassword } from "@pages/RecoveryPassword/NewPassword";
 import { RequestCode } from "@pages/RecoveryPassword/RequestCode";
@@ -36,27 +38,34 @@ function Root() {
         path="signup"
         element={<SignUp />}
       />
-      <Route path="/recovery">
+      <Route
+        path="/recovery"
+        element={<RecoveryPassword />}
+      >
         <Route
           path="request"
           element={<RequestCode />}
         />
         <Route
-          path="password"
+          path="password/:codeId"
           element={<NewPassword />}
         />
         <Route
-          path="confirm/:key"
+          path="confirm/:codeId"
           element={<ConfirmCode />}
         />
       </Route>
       <Route
         path="/conference/:short"
-        Component={Conference}
+        element={<Conference />}
+      />
+      <Route
+        path="/404"
+        element={<NotFound />}
       />
       <Route
         path="*"
-        element={<Login />}
+        element={<NotFound />}
       />
     </Routes>
   );

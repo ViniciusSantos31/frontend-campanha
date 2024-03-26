@@ -31,7 +31,7 @@ export const HomeRequester: React.FC = () => {
   );
 
   return (
-    <div className="w-screen h-dvh flex flex-col items-center">
+    <div className="w-screen h-dvh flex flex-col items-center overflow-x-hidden">
       <Header />
       <div
         id="body-container-requester"

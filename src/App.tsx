@@ -1,14 +1,13 @@
 import { ProconLogo } from "@assets/procon-logo";
 import { Toaster } from "@components/ui/sonner";
 import { Loader } from "lucide-react";
-import { lazy } from "react";
 
-import { me } from "services/me";
+import { me } from "services/users";
 import { useAuthStore } from "store/auth";
 import "./services/socket";
 import socket from "./services/socket";
 
-const RoutesApp = lazy(() => import("./routes"));
+import RoutesApp from "./routes";
 
 function App() {
   const { user } = useAuthStore.getState();

@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate, useParams } from "react-router-dom";
 import { Button } from "../ui/button";
 
 import {
@@ -6,12 +6,15 @@ import {
   InputOTPGroup,
   InputOTPSlot,
 } from "@components/ui/input-otp";
+import { useRecovery } from "@hooks/useRecovery";
 import {
   IConfirmCodeSchema,
   confirmCodeResolver,
 } from "@validations/recoveryPassword/confirmCode";
 import { ArrowLeft } from "lucide-react";
+import { useCallback, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { verifyCodeId } from "services/recoveryPassword";
 import {
   Form,
   FormControl,
@@ -22,6 +25,9 @@ import {
 
 export const ConfirmCodeForm: React.FC = () => {
   const navigate = useNavigate();
+  const { codeId } = useParams<{ codeId: string }>();
+  const { isLoading, validateCode } = useRecovery();
+  const [isCodeValid, setIsCodeValid] = useState(true);
 
   const form = useForm<IConfirmCodeSchema>({
     resolver: confirmCodeResolver,
@@ -34,21 +40,25 @@ export const ConfirmCodeForm: React.FC = () => {
     formState: { isValid },
   } = form;
 
-  const navigateToHome = () => {
-    navigate("/recovery/password", {
-      preventScrollReset: true,
-      replace: true,
-      unstable_viewTransition: true,
-      relative: "path",
-    });
-  };
+  const verifyCode = useCallback(async () => {
+    const isValid = await verifyCodeId(codeId ?? "");
+    setIsCodeValid(isValid);
+  }, [codeId]);
+
+  useEffect(() => {
+    verifyCode();
+  }, [verifyCode]);
+
+  if (!codeId || !isCodeValid) return <Navigate to="/recovery/request" />;
 
   return (
     <Form {...form}>
       <form
         id="form-signup"
         className="w-full flex flex-col items-start justify-center p-6 border rounded-md space-y-8 lg:w-1/2 bg-background xl:max-w-lg animate-slide-left"
-        onSubmit={handleSubmit(navigateToHome)}
+        onSubmit={handleSubmit(() =>
+          validateCode(Number(form.getValues().code), codeId)
+        )}
       >
         <div>
           <Button
@@ -110,6 +120,7 @@ export const ConfirmCodeForm: React.FC = () => {
           <Button
             className="w-full"
             disabled={!isValid}
+            loading={isLoading}
             type="submit"
           >
             Continuar

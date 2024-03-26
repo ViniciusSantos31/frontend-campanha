@@ -1,13 +1,16 @@
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate, useParams } from "react-router-dom";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 
+import { useRecovery } from "@hooks/useRecovery";
 import {
   INewPasswordSchema,
   newPasswordResolver,
 } from "@validations/recoveryPassword/newPassword";
 import { ArrowLeft } from "lucide-react";
+import { useCallback, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { verifyCodeId } from "services/recoveryPassword";
 import {
   Form,
   FormControl,
@@ -18,6 +21,9 @@ import {
 
 export const NewPasswordForm: React.FC = () => {
   const navigate = useNavigate();
+  const { codeId } = useParams<{ codeId: string }>();
+  const { isLoading, resetPassword } = useRecovery();
+  const [isCodeValid, setIsCodeValid] = useState(true);
 
   const form = useForm<INewPasswordSchema>({
     resolver: newPasswordResolver,
@@ -30,21 +36,25 @@ export const NewPasswordForm: React.FC = () => {
     formState: { isValid },
   } = form;
 
-  const navigateToHome = () => {
-    navigate("/recovery/confirm", {
-      preventScrollReset: true,
-      replace: true,
-      unstable_viewTransition: true,
-      relative: "path",
-    });
-  };
+  const verifyCode = useCallback(async () => {
+    const isValid = await verifyCodeId(codeId ?? "");
+    setIsCodeValid(isValid);
+  }, [codeId]);
+
+  useEffect(() => {
+    verifyCode();
+  }, [verifyCode]);
+
+  if (!codeId || !isCodeValid) return <Navigate to="/recovery/request" />;
 
   return (
     <Form {...form}>
       <form
         id="form-signup"
         className="w-full flex flex-col items-start justify-center p-6 border rounded-md space-y-8 lg:w-1/2 bg-background xl:max-w-lg animate-slide-left"
-        onSubmit={handleSubmit(navigateToHome)}
+        onSubmit={handleSubmit(() =>
+          resetPassword({ password: form.getValues().new_password, codeId })
+        )}
       >
         <div>
           <Button
@@ -110,6 +120,7 @@ export const NewPasswordForm: React.FC = () => {
           <Button
             className="w-full"
             disabled={!isValid}
+            loading={isLoading}
             type="submit"
           >
             Criar nova senha

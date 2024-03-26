@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 
+import { useRecovery } from "@hooks/useRecovery";
 import {
   IRequestCodeSchema,
   requestCodeResolver,
@@ -18,6 +19,7 @@ import {
 
 export const RequestCodeForm: React.FC = () => {
   const navigate = useNavigate();
+  const { isLoading, requestCode } = useRecovery();
 
   const form = useForm<IRequestCodeSchema>({
     resolver: requestCodeResolver,
@@ -30,19 +32,19 @@ export const RequestCodeForm: React.FC = () => {
     formState: { isValid },
   } = form;
 
-  const navigateToHome = () => {
-    navigate("/recovery/confirm/123adsjkasdh982374", {
-      replace: true,
-      relative: "path",
-    });
-  };
+  // const navigateToHome = () => {
+  //   navigate("/recovery/confirm/123adsjkasdh982374", {
+  //     replace: true,
+  //     relative: "path",
+  //   });
+  // };
 
   return (
     <Form {...form}>
       <form
         id="form-signup"
         className="w-full flex flex-col items-start justify-center p-6 border rounded-md space-y-8 lg:w-1/2 bg-background xl:max-w-lg animate-slide-left"
-        onSubmit={handleSubmit(navigateToHome)}
+        onSubmit={handleSubmit(() => requestCode(form.getValues().email))}
       >
         <div>
           <Button
@@ -89,6 +91,7 @@ export const RequestCodeForm: React.FC = () => {
           <Button
             className="w-full"
             disabled={!isValid}
+            loading={isLoading}
             type="submit"
           >
             Enviar

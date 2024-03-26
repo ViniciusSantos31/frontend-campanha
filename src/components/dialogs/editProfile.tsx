@@ -6,6 +6,7 @@ import {
   DialogTitle,
 } from "@components/ui/dialog";
 import { useAuth } from "@hooks/useAuth";
+import { useMutation } from "@tanstack/react-query";
 import { getFallbackAvatar } from "@utils/getFallbackAvatar";
 import {
   IEditProfileSchema,
@@ -14,6 +15,9 @@ import {
 import { User } from "lucide-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { queryClient } from "services/queryClient";
+import { uploadImage } from "services/uploadImage";
+import { me, update } from "services/users";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Button } from "../ui/button";
 import {
@@ -34,9 +38,29 @@ const EditProfile: React.FC = () => {
     resolver: editProfileResolver,
     mode: "onChange",
     defaultValues: {
-      name: `${user?.firstName} ${user?.lastName}` ?? "",
+      firstName: user?.firstName,
+      lastName: user?.lastName,
       email: user?.email ?? "",
-      avatar: "",
+    },
+  });
+
+  const {
+    handleSubmit,
+    formState: { isDirty, isLoading },
+  } = form;
+
+  const { mutate, isPending } = useMutation({
+    mutationFn: async (data: IEditProfileSchema) => {
+      let avatarUrl;
+      if (imagePreview) avatarUrl = await uploadImage(imagePreview);
+
+      await update({ ...data, avatarUrl });
+    },
+    onSuccess: async () => {
+      await me();
+      queryClient.invalidateQueries({
+        queryKey: ["user", user?.id],
+      });
     },
   });
 
@@ -54,10 +78,13 @@ const EditProfile: React.FC = () => {
         </DialogDescription>
       </DialogHeader>
       <Form {...form}>
-        <form className="space-y-4">
+        <form
+          className="space-y-4"
+          onSubmit={handleSubmit((data) => mutate(data))}
+        >
           <div className="flex flex-col items-center justify-center space-y-2">
             <FormField
-              name="avatar"
+              name="avatarUrl"
               control={control}
               render={({ field }) => (
                 <FormItem>
@@ -98,23 +125,47 @@ const EditProfile: React.FC = () => {
                 </FormItem>
               )}
             />
-            <FormField
-              name="name"
-              control={control}
-              render={({ field }) => (
-                <FormItem>
-                  <FormControl>
-                    <Input
-                      id="name"
-                      label="Nome"
-                      placeholder="Nome"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+            <div className="w-full flex flex-col items-start justify-center gap-4 lg:flex-row">
+              <FormField
+                control={control}
+                name="firstName"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <Input
+                        id="firstName"
+                        label="Primeiro nome"
+                        placeholder="Primeiro nome"
+                        type="text"
+                        className="w-full"
+                        autoFocus
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={control}
+                name="lastName"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <Input
+                        id="lastName"
+                        label="Último nome"
+                        placeholder="Último nome"
+                        type="text"
+                        className="w-full"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
             <FormField
               name="email"
               control={control}
@@ -142,7 +193,13 @@ const EditProfile: React.FC = () => {
                 Cancel
               </Button>
             </DialogClose>
-            <Button className="mb-2 lg:mb-0">Salvar</Button>
+            <Button
+              className="mb-2 lg:mb-0"
+              disabled={!isDirty}
+              loading={isPending || isLoading}
+            >
+              Salvar
+            </Button>
           </DialogFooter>
         </form>
       </Form>

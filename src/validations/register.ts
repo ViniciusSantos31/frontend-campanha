@@ -1,53 +1,43 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 
-const signUpSchema = z.object({
-  name: z
-    .string({
-      required_error: "O nome é obrigatório",
-    })
-    .min(3, "O nome deve ter no mínimo 3 caracteres"),
-  personal_doc: z
-    .string({
-      required_error: "O CPF é obrigatório",
-    })
-    .min(11, "O CPF deve ter 11 caracteres")
-    .refine(
-      (value) => {
-        const personal_doc = value.replace(/[^a-zA-Z0-9 ]/g, "");
-        return personal_doc.length === 11 && !isNaN(Number(personal_doc));
-      },
-      {
-        message: "Digite um CPF válido",
-      }
-    ),
-  professional_doc: z
-    .string({
-      required_error: "O CRM é obrigatório",
-    })
-    .min(7, "O CRM deve ter 7 caracteres"),
-  phone: z
-    .string({
-      required_error: "O celular é obrigatório",
-    })
-    .min(8, "Digite um número de celular válido"),
-  email: z
-    .string({
-      required_error: "O e-mail é obrigatório",
-      invalid_type_error: "Insira um e-mail válido",
-    })
-    .email("Insira um e-mail válido"),
-  password: z
-    .string({
-      required_error: "A senha é obrigatória",
-    })
-    .min(6, "A senha deve ter no mínimo 6 caracteres"),
-  password_confirmation: z
-    .string({
-      required_error: "A confirmação de senha é obrigatória",
-    })
-    .min(6, "A confirmação de senha deve ter no mínimo 6 caracteres"),
-});
+const signUpSchema = z
+  .object({
+    firstName: z.string().min(3, "Primeiro nome muito curto").max(255),
+    lastName: z.string().min(3, "Último nome muito curto").max(255),
+    email: z.string().email("Digite um e-mail válido"),
+    password: z
+      .string()
+      .min(8, "A senha deve ter no mínimo 8 caracteres")
+      .max(255),
+    passwordConfirmation: z
+      .string()
+      .min(8, "A senha deve ter no mínimo 8 caracteres")
+      .max(255),
+    phone: z
+      .string()
+      .min(10, "O número de telefone deve ter no mínimo 10 digitos")
+      .max(15, "O número de telefone deve ter no máximo 15 digitos"),
+    userType: z.enum(["REQUESTER", "PROVIDER"]).default("REQUESTER").optional(),
+    status: z
+      .enum(["AVAILABLE", "OFFLINE", "PAUSED", "BUSY"])
+      .default("OFFLINE")
+      .optional(),
+    doc: z
+      .string()
+      .min(10, "O documento deve ter no mínimo 10 dígitos")
+      .max(255, "O documento deve ter no máximo 255 dígitos")
+      .optional(),
+    cpf: z
+      .string()
+      .min(11, "O CPF deve conter 11 dígitos")
+      .max(11, "O CPF deve conter 11 dígitos"),
+    companyId: z.string().optional().default("default_company"),
+  })
+  .refine((data) => data.password === data.passwordConfirmation, {
+    message: "As senhas não coincidem",
+    path: ["passwordConfirmation"],
+  });
 
 export type ISignUpSchema = z.infer<typeof signUpSchema>;
 

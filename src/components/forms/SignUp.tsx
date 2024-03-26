@@ -1,6 +1,6 @@
 import { getPasswordSecurity } from "@utils/password-security";
 import { ISignUpSchema, signUpResolver } from "@validations/register";
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { Button } from "../ui/button";
@@ -14,6 +14,7 @@ import {
 import { Input } from "../ui/input";
 import { Progress } from "../ui/progress";
 
+import { useRegister } from "@hooks/useRegister";
 import { useHookFormMask } from "use-mask-input";
 import { Options as MaskOptions } from "use-mask-input/src/inputmask.types";
 
@@ -28,17 +29,20 @@ const maskOptions: MaskOptions = {
 export const SignUpForm: React.FC = () => {
   const form = useForm<ISignUpSchema>({
     resolver: signUpResolver,
+    context: "signup",
     mode: "onChange",
-    defaultValues: {
-      phone: "82088717",
+    resetOptions: {
+      keepValues: false,
     },
   });
+
+  const { isLoading, register: registerUser } = useRegister();
 
   const {
     control,
     handleSubmit,
     watch,
-    formState: { isValid },
+    formState: { isValid, errors },
     register,
   } = form;
 
@@ -46,50 +50,71 @@ export const SignUpForm: React.FC = () => {
 
   const password = watch("password");
 
-  const handleCreateUser = (data: ISignUpSchema) => {
-    console.log("data", data);
-  };
-
   const passwordSecurity = useMemo(() => {
     return getPasswordSecurity(password ?? "");
   }, [password]);
+
+  useEffect(() => {
+    console.log(isValid, errors);
+  }, [isValid, errors]);
 
   return (
     <Form {...form}>
       <form
         id="form-signup"
         className="w-full h-full mb-10 lg:h-auto lg:mb-1 flex flex-col justify-between p-6 border rounded-md space-y-8 md:w-full lg:w-1/2 xl:max-w-lg animate-slide-left transition-all"
-        onSubmit={handleSubmit(handleCreateUser, (data) => console.log(data))}
+        onSubmit={handleSubmit(registerUser, (data) => console.log(data))}
       >
         <span className="text-2xl font-semibold">Cadastro</span>
         <div
           id="input-container"
           className="w-full flex flex-col items-end space-y-2"
         >
-          <FormField
-            control={control}
-            name="name"
-            render={({ field }) => (
-              <FormItem>
-                <FormControl>
-                  <Input
-                    id="name"
-                    label="Nome completo"
-                    placeholder="Nome completo"
-                    type="text"
-                    className="w-full"
-                    autoFocus
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+          <div className="w-full flex flex-col items-start justify-center gap-4 lg:flex-row">
+            <FormField
+              control={control}
+              name="firstName"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <Input
+                      id="firstName"
+                      label="Primeiro nome"
+                      placeholder="Primeiro nome"
+                      type="text"
+                      className="w-full"
+                      autoFocus
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={control}
+              name="lastName"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <Input
+                      id="lastName"
+                      label="Último nome"
+                      placeholder="Último nome"
+                      type="text"
+                      className="w-full"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
 
           <FormField
             control={control}
-            name="personal_doc"
+            name="cpf"
             render={({ field }) => (
               <FormItem>
                 <FormControl>
@@ -101,7 +126,7 @@ export const SignUpForm: React.FC = () => {
                     className="w-full"
                     {...field}
                     {...registerWithMask(
-                      "personal_doc",
+                      "cpf",
                       ["999.999.999-99", "99.999.999/9999-99"],
                       maskOptions
                     )}
@@ -122,26 +147,6 @@ export const SignUpForm: React.FC = () => {
                     label="E-mail"
                     placeholder="E-mail"
                     type="email"
-                    className="w-full"
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={control}
-            name="professional_doc"
-            render={({ field }) => (
-              <FormItem>
-                <FormControl>
-                  <Input
-                    id="professional_doc"
-                    label="CRM"
-                    placeholder="CRM"
-                    type="text"
                     className="w-full"
                     {...field}
                   />
@@ -207,12 +212,12 @@ export const SignUpForm: React.FC = () => {
           />
           <FormField
             control={control}
-            name="password_confirmation"
+            name="passwordConfirmation"
             render={({ field }) => (
               <FormItem>
                 <FormControl>
                   <Input
-                    id="password_confirmation"
+                    id="passwordConfirmation"
                     label="Confirme sua senha"
                     placeholder="Senha"
                     type="password"
@@ -233,7 +238,12 @@ export const SignUpForm: React.FC = () => {
           >
             Entrar na plataforma
           </Link>
-          <Button disabled={!isValid}>Cadastrar</Button>
+          <Button
+            disabled={!isValid}
+            loading={isLoading}
+          >
+            Cadastrar
+          </Button>
         </footer>
       </form>
     </Form>

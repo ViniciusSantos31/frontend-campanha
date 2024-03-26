@@ -7,13 +7,19 @@ import { WifiOff } from "lucide-react";
 
 import { useAvailability } from "@hooks/useAvailability";
 import { getFallbackAvatar } from "@utils/getFallbackAvatar";
+import { useEffect } from "react";
+import { me } from "services/users";
 
 export const HomeProvider: React.FC = () => {
   const { handleCreateRoom, isLoading } = useAvailability();
   const { user: provider } = useAuth();
 
+  useEffect(() => {
+    me();
+  }, []);
+
   return (
-    <div className="w-screen h-screen flex flex-col items-center">
+    <div className="w-screen h-screen flex flex-col items-center overflow-x-hidden">
       <Header />
       <div className="h-full flex flex-col items-center justify-center">
         <div

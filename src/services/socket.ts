@@ -76,6 +76,12 @@ socket.on(
         description: "Você será direcionado para uma conferência.",
         duration: 5000,
         closeButton: false,
+        action: {
+          label: "Entrar agora.",
+          onClick: () => {
+            window.location.href = `/conference/${short}`;
+          },
+        },
         onAutoClose: async () => {
           window.location.href = `/conference/${short}`;
         },

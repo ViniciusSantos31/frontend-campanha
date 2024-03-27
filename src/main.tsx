@@ -11,6 +11,7 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import "./global.css";
 
 createRoot(document.getElementById("root")!).render(
+  // <StrictMode>
   <QueryClientProvider client={queryClient}>
     <AuthProvider>
       <ThemeProvider>
@@ -23,4 +24,5 @@ createRoot(document.getElementById("root")!).render(
       </ThemeProvider>
     </AuthProvider>
   </QueryClientProvider>
+  // </StrictMode>
 );

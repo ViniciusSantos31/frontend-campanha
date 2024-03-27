@@ -14,6 +14,7 @@ import {
   DropdownMenuTrigger,
 } from "@components/ui/dropdown-menu";
 import { useAuth } from "@hooks/useAuth";
+import { useCloseModal } from "@hooks/useCloseModal";
 import { useTheme } from "@hooks/useTheme";
 import { getFallbackAvatar } from "@utils/getFallbackAvatar";
 import { Loading } from "App";
@@ -23,13 +24,17 @@ import EditProfile from "./dialogs/editProfile";
 
 export const AvatarBadge: React.FC = () => {
   const { user } = useAuth();
+  const { open, handleOpen } = useCloseModal();
 
   const fullName = user?.firstName + " " + user?.lastName;
 
   if (!user) return <Loading />;
 
   return (
-    <Dialog>
+    <Dialog
+      open={open}
+      onOpenChange={handleOpen}
+    >
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <button

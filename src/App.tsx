@@ -34,7 +34,6 @@ function App() {
         position="top-right"
         closeButton
         duration={5000}
-        className="z-999"
       />
       <RoutesApp />
     </div>

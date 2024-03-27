@@ -4,6 +4,7 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
+  DialogTrigger,
 } from "@components/ui/dialog";
 import { useAuth } from "@hooks/useAuth";
 import { useMutation } from "@tanstack/react-query";
@@ -193,13 +194,15 @@ const EditProfile: React.FC = () => {
                 Cancel
               </Button>
             </DialogClose>
-            <Button
-              className="mb-2 lg:mb-0"
-              disabled={!isDirty}
-              loading={isPending || isLoading}
-            >
-              Salvar
-            </Button>
+            <DialogTrigger asChild>
+              <Button
+                className="mb-2 lg:mb-0"
+                disabled={!isDirty}
+                loading={isPending || isLoading}
+              >
+                Salvar
+              </Button>
+            </DialogTrigger>
           </DialogFooter>
         </form>
       </Form>

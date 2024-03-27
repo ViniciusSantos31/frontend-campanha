@@ -1,3 +1,4 @@
+import { cn } from "@utils/cn";
 import { Loading } from "App";
 import { useCallback, useEffect, useState } from "react";
 import { Navigate, useNavigate, useParams } from "react-router-dom";
@@ -86,7 +87,10 @@ export const Conference: React.FC = () => {
 
   return (
     <div
-      className="h-dvh w-screen overflow-x-hidden"
+      className={cn(
+        "h-dvh w-screen overflow-x-hidden",
+        !conferenceIsLoaded && "overflow-y-hidden"
+      )}
       id="conference"
     >
       {!conferenceIsLoaded && <Loading />}

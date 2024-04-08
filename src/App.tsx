@@ -7,10 +7,12 @@ import { useAuthStore } from "store/auth";
 import "./services/socket";
 import socket from "./services/socket";
 
+import { useTheme } from "@hooks/useTheme";
 import RoutesApp from "./routes";
 
 function App() {
   const { user } = useAuthStore.getState();
+  const { theme } = useTheme();
 
   window.addEventListener(
     "unload",
@@ -33,6 +35,7 @@ function App() {
       <Toaster
         position="top-right"
         closeButton
+        theme={theme}
         duration={5000}
       />
       <RoutesApp />

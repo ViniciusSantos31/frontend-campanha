@@ -8,7 +8,7 @@
     "build": "tsc && vite build",
     "test": "jest --watchAll",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview",
+    "preview": "vite preview --port 5173",
     "shadcn": "npx shadcn-ui@latest add"
   },
   "dependencies": {

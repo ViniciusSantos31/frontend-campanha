@@ -1,7 +1,8 @@
 import { User } from "@/types/user";
 import { ILoginSchema } from "@validations/login";
+import { ILoginAsGuestSchema } from "@validations/loginAsGuest";
 import { createContext, useState } from "react";
-import { login, logout } from "services/auth";
+import { login, loginAsGuest, logout } from "services/auth";
 
 import { useAuthStore } from "store/auth";
 
@@ -13,6 +14,7 @@ type AuthProviderState = {
   user: User | null;
   isLoading?: boolean;
   login: (data: ILoginSchema) => void;
+  guestLogin: (data: ILoginAsGuestSchema) => void;
   logout: () => void;
 };
 
@@ -21,6 +23,7 @@ const initialState: AuthProviderState = {
   isAuthenticated: false,
   isLoading: false,
   login: () => {},
+  guestLogin: () => {},
   logout: () => {},
 } as AuthProviderState;
 
@@ -43,16 +46,33 @@ export function AuthProvider({ children }: AuthProviderProps) {
     }
   };
 
+  const submitLoginAsGuest = async (data: ILoginAsGuestSchema) => {
+    try {
+      setIsLoading(true);
+      const response = await loginAsGuest(data);
+
+      if (response) {
+        saveUser(response.user);
+      }
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   const handleLogout = () => {
     logout();
     deleteUser();
   };
 
+  const contextValue = {
+    user,
+    isLoading,
+    login: submitLogin,
+    guestLogin: submitLoginAsGuest,
+    logout: handleLogout,
+  };
+
   return (
-    <AuthContext.Provider
-      value={{ user, login: submitLogin, logout: handleLogout, isLoading }}
-    >
-      {children}
-    </AuthContext.Provider>
+    <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>
   );
 }

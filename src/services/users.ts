@@ -11,10 +11,10 @@ async function me(): Promise<void> {
 
     saveUser(response.data);
   } catch (error) {
-    console.error(error);
     toast.error("Não foi possível atualizar suas informações.");
   }
 }
+
 async function update(data: IEditProfileSchema): Promise<void> {
   try {
     const { user } = useAuthStore.getState();

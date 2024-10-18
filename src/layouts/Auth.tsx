@@ -1,4 +1,5 @@
-import { ProconLogo } from "@assets/procon-logo";
+import LogoSUS from "@assets/Logo_SUS.png";
+
 import { FooterSupport } from "@components/footerSupport";
 import { ReactElement } from "react";
 
@@ -13,10 +14,16 @@ export const AuthLayout: React.FC<{ children: ReactElement }> = ({
       <div className="w-full flex flex-col flex-1 items-center justify-center gap-y-10 px-8 lg:flex-row lg:space-x-24">
         <aside
           id="logo"
-          className="flex items-center flex-col"
+          className="relative flex items-start flex-col"
         >
-          <p className="font-sans text-4xl">Plantão</p>
-          <ProconLogo />
+          <p className="font-sans text-3xl absolute text-secondary-foreground font-bold">
+            Plantão
+          </p>
+          <img
+            src={LogoSUS}
+            alt="Logo"
+            className="h-40 aspect-auto"
+          />
         </aside>
         {children}
       </div>

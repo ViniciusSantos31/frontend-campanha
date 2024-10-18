@@ -1,4 +1,5 @@
 import { CreateConferenceResponse } from "@/types/room";
+import { toast } from "sonner";
 import { useAuthStore } from "store/auth";
 import { api } from "./api";
 
@@ -14,7 +15,9 @@ async function createConference(): Promise<CreateConferenceResponse> {
 
     return response.data;
   } catch (error) {
-    console.error(error);
+    toast.error("Falha ao criar conferência", {
+      description: "Tente novamente mais tarde",
+    });
     throw new Error("Falha ao criar conferência");
   }
 }

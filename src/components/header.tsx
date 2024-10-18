@@ -1,7 +1,8 @@
-import { ProconLogo } from "@assets/procon-logo";
 import { cn } from "@utils/cn";
 import { Link } from "react-router-dom";
 import { AvatarBadge } from "./avatarBadge";
+
+import LogoSUS from "@assets/Logo_SUS.png";
 
 interface HeaderProps extends React.HTMLAttributes<HTMLDivElement> {}
 
@@ -28,13 +29,19 @@ export const Header: React.FC<HeaderProps> = ({ className, ...rest }) => {
 const LogoHeader: React.FC = () => {
   return (
     <Link to="/home">
-      <div
-        id="logo-header"
-        className="flex items-center justify-center space-x-2 cursor-pointer transition-colors hover:text-slate-500"
+      <aside
+        id="logo"
+        className="flex items-center"
       >
-        <p className="font-sans text-sm">Plantão</p>
-        <ProconLogo width="80" />
-      </div>
+        <p className="font-sans text-lg text-secondary-foreground mr-3">
+          Plantão
+        </p>
+        <img
+          src={LogoSUS}
+          alt="Logo"
+          className="h-10 aspect-auto"
+        />
+      </aside>
     </Link>
   );
 };

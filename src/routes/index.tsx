@@ -1,4 +1,5 @@
 import { Conference } from "@pages/Conference";
+import { LoginAsGuest } from "@pages/GuestLogin";
 import { Home } from "@pages/Home";
 import { Login } from "@pages/Login";
 import { NotFound } from "@pages/NotFound";
@@ -27,6 +28,10 @@ function Root() {
       <Route
         path="/"
         element={<Login />}
+      />
+      <Route
+        path="guest"
+        element={<LoginAsGuest />}
       />
       <Route
         caseSensitive

@@ -18,7 +18,7 @@ const WaitingQueueAlert: React.FC = () => {
   const { user } = useAuthStore();
 
   return (
-    <AlertDialog open={!!user?.inQueueSince}>
+    <AlertDialog open={!!user?.inQueueSince || user?.status === "AVAILABLE"}>
       <AlertDialogTrigger asChild>
         <Button
           className="h-10"

@@ -69,10 +69,17 @@ async function refreshToken() {
   }
 }
 
-async function loginWithToken(token: string) {
+async function loginAsGuest({
+  firstName,
+  lastName,
+}: {
+  firstName: string;
+  lastName: string;
+}): Promise<LoginResponse | undefined> {
   try {
-    const response = await api.post<LoginResponse>("/api/loginWithToken", {
-      token,
+    const response = await api.post<LoginResponse>("/login/guest", {
+      firstName,
+      lastName,
     });
 
     cookie.set(null, "@campanha/auth", response.data.token, {
@@ -88,6 +95,7 @@ async function loginWithToken(token: string) {
     return response.data;
   } catch {
     toast.error("Falha ao autenticar-se. Tente novamente.");
+    throw new Error("Falha ao autenticar-se. Tente novamente.");
   }
 }
 
@@ -97,4 +105,4 @@ async function logout() {
   cookie.destroy(null, "@campanha/auth");
 }
 
-export { login, loginWithToken, logout, refreshToken, registerUser };
+export { login, loginAsGuest, logout, refreshToken, registerUser };

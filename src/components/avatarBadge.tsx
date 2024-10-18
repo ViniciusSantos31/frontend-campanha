@@ -21,6 +21,12 @@ import { Loading } from "App";
 import { HelpCircle, LogOutIcon, Monitor, Moon, Sun, User } from "lucide-react";
 import { Link } from "react-router-dom";
 import EditProfile from "./dialogs/editProfile";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "./ui/tooltip";
 
 export const AvatarBadge: React.FC = () => {
   const { user } = useAuth();
@@ -127,10 +133,23 @@ const DropdownContent: React.FC = () => {
         </DropdownMenuPortal>
       </DropdownMenuSub>
       <DropdownMenuSeparator />
-      <DropdownMenuItem>
-        <HelpCircle size={16} />
-        Suporte
-      </DropdownMenuItem>
+      <TooltipProvider>
+        <Tooltip>
+          <TooltipTrigger>
+            <DropdownMenuItem disabled>
+              <HelpCircle size={16} />
+              Suporte
+            </DropdownMenuItem>
+          </TooltipTrigger>
+          <TooltipContent
+            avoidCollisions
+            align="center"
+            alignOffset={10}
+          >
+            <p className="font-sans font-medium text-sm">Em breve</p>
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
       <DropdownMenuSeparator />
       <DropdownMenuItem asChild>
         <Link

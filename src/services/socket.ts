@@ -1,10 +1,10 @@
-import { User } from "@/types/user";
 import io from "socket.io-client";
 import { toast } from "sonner";
 import { useAuthStore } from "store/auth";
 import { queryClient } from "./queryClient";
 import { leaveQueue } from "./queue";
 import { createConference } from "./room";
+import { me } from "./users";
 
 const ivDevMode = import.meta.env.DEV;
 const wsURL = ivDevMode ? "http://localhost:3333" : import.meta.env.VITE_WS_URL;
@@ -47,15 +47,16 @@ socket.on("user_status_changed", () => {
   });
 });
 
-socket.on("new_user_in_queue", async (user: User) => {
+socket.on("new_user_in_queue", async () => {
+  await me();
+
   const { user: currentUser } = useAuthStore.getState();
 
-  if (currentUser && currentUser.userType === "PROVIDER") {
-    toast.info("Entrou na fila de espera", {
-      description: `Nome: ${user.firstName} ${user.lastName}`,
-      duration: 5000,
-    });
-
+  if (
+    currentUser &&
+    currentUser.userType === "PROVIDER" &&
+    currentUser.status === "AVAILABLE"
+  ) {
     await createConference();
   }
 });

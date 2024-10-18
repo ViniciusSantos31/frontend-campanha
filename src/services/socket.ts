@@ -66,6 +66,10 @@ socket.on(
   async ({ short, userToCall, providerToCall }) => {
     const { user } = useAuthStore.getState();
 
+    console.log("user", user?.id, "providerToCall", providerToCall.id);
+
+    console.log("conference_created", short, userToCall, providerToCall);
+
     if (user && user.id === providerToCall.id) {
       window.location.href = `/conference/${short}`;
     }

@@ -32,7 +32,10 @@ const signUpSchema = z
       .string()
       .min(11, "O CPF deve conter 11 dígitos")
       .max(11, "O CPF deve conter 11 dígitos"),
-    companyId: z.string().optional().default("default_company"),
+    companyId: z
+      .string()
+      .optional()
+      .default("c7e623a1-cea4-4d0b-bd7c-46b6aba861b2"),
   })
   .refine((data) => data.password === data.passwordConfirmation, {
     message: "As senhas não coincidem",

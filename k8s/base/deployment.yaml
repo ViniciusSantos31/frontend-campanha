@@ -23,10 +23,10 @@ spec:
           imagePullPolicy: Always
           name: plantao-frontend
           ports:
-            - containerPort: 3000
+            - containerPort: 5173
       imagePullSecrets:
         - name: regcred
         - name: ocir
       restartPolicy: Always
-      serviceAccountName: ''
+      serviceAccountName: ""
 status: {}

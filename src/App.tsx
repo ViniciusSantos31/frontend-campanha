@@ -1,4 +1,4 @@
-import { ProconLogo } from "@assets/procon-logo";
+import LogoSUS from "@assets/Logo_SUS.png";
 import { Toaster } from "@components/ui/sonner";
 import { Loader } from "lucide-react";
 
@@ -48,10 +48,16 @@ export const Loading: React.FC = () => {
     <div className="flex flex-col space-y-6 items-center justify-center h-screen bg-background">
       <aside
         id="logo"
-        className="flex items-center flex-col"
+        className="relative flex items-center flex-col"
       >
-        <p className="font-sans text-4xl">Plantão</p>
-        <ProconLogo />
+        <p className="font-sans text-3xl absolute left-0 text-secondary-foreground font-bold">
+          Plantão
+        </p>
+        <img
+          src={LogoSUS}
+          alt="Logo"
+          className="h-40 aspect-auto"
+        />
       </aside>
       <Loader
         size={40}

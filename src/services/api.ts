@@ -4,7 +4,7 @@ import { toast } from "sonner";
 
 const ivDevMode = import.meta.env.DEV;
 const baseURL = ivDevMode
-  ? "http://localhost:3333"
+  ? "http://localhost:3333/api"
   : import.meta.env.VITE_BACKEND_URL;
 
 let isRefreshing = false;

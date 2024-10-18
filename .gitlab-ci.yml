@@ -1,0 +1,41 @@
+stages:
+  - build-dev
+  - deploy-dev
+
+variables:
+  IMAGE: plantao-frontend
+  GIT_SHA: $CI_COMMIT_SHA
+
+################################ DEPLOY #####################################
+
+build-dev:
+  image: docker:dind
+  stage: build-dev
+  rules:
+    - if: $CI_COMMIT_BRANCH == "develop"
+  script:
+    ## BUILD AND TAG IMAGE
+    - docker login gru.ocir.io -u $ORACLE_OCR_USER -p $ORACLE_OCR_TOKEN
+    - docker build . -t gru.ocir.io/grrk0pckmbox/$IMAGE:$GIT_SHA
+    - docker push gru.ocir.io/grrk0pckmbox/$IMAGE:$GIT_SHA
+    ## TAG TO BRANCH NAME
+    - docker tag gru.ocir.io/grrk0pckmbox/$IMAGE:$GIT_SHA gru.ocir.io/grrk0pckmbox/$IMAGE:$CI_COMMIT_REF_NAME
+    - docker push gru.ocir.io/grrk0pckmbox/$IMAGE:$CI_COMMIT_REF_NAME
+
+deploy-dev:
+  image: wisecarecompany/ubuntu:lts
+  stage: deploy-dev
+  rules:
+    - if: $CI_COMMIT_BRANCH == "develop"
+  script:
+    - mkdir -p /root/.kube
+    - touch /root/.kube/config
+    - "curl -s -u $TOKEN_RANCHER https://rancher.v4h.cloud/v3/clusters/$CLUSTER_ID_DEV?action=generateKubeconfig -X POST -H 'content-type: application/json' --insecure | jq -r .config > ~/.kube/config"
+    - curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh"  | bash
+    - chmod +x kustomize
+    - mv kustomize /usr/bin/kustomize
+    - cd k8s/overlays/development
+    - kustomize edit set image docker.dynavideo.com.br:8083/IMAGE:TAG=gru.ocir.io/grrk0pckmbox/$IMAGE:$GIT_SHA
+    - kustomize build . | kubectl apply -f -
+    - kubectl -n development rollout status deployment/$IMAGE
+    - kubectl -n development get services -o wide

@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: plantao-frontend-config
+data:
+  VITE_FIREBASE_API_KEY: AIzaSyDexbdBIuXiYx8GAJev3E6mHUzHc8yQURw
+  VITE_FIREBASE_AUTH_DOMAIN: campanha-storage.firebaseapp.com
+  VITE_FIREBASE_PROJECT_ID: campanha-storage
+  VITE_FIREBASE_STORAGE_BUCKET: campanha-storage.appspot.com
+  VITE_FIREBASE_MESSAGING_SENDER_ID: 99733913393
+  VITE_FIREBASE_APP_ID: 1:99733913393:web:95d4581415de5184ca7a10
+  VITE_FIREBASE_MEASUREMENT_ID: G-180BTCSBYY
+  VITE_WS_URL: wss://backend-campanha-1.onrender.com
+  VITE_BACKEND_URL: https://backend-campanha-1.onrender.com

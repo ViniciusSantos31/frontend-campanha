@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: plantao-frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: plantao-frontend
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        run: plantao-frontend
+    spec:
+      securityContext:
+        runAsUser: 0
+      containers:
+        - envFrom:
+            - configMapRef:
+                name: plantao-frontend-config
+          image: docker.dynavideo.com.br:8083/IMAGE:TAG
+          imagePullPolicy: Always
+          name: plantao-frontend
+          ports:
+            - containerPort: 3000
+      imagePullSecrets:
+        - name: regcred
+        - name: ocir
+      restartPolicy: Always
+      serviceAccountName: ''
+status: {}

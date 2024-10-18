@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { toggleStatus } from "services/providers";
 import { queryClient } from "services/queryClient";
+import { createConference } from "services/room";
 import { toast } from "sonner";
 import { useAuthStore } from "store/auth";
 
@@ -26,6 +27,9 @@ export const useAvailability = (): AvailabilityReturn => {
       queryClient.invalidateQueries({
         queryKey: ["providers"],
       });
+
+      if (user?.userType === "PROVIDER" && user?.status === "PAUSED")
+        await createConference().catch(() => {});
     } catch {
       toast.error(
         "Não foi possível mudar a disponibilidade. Tente novamente mais tarde.",

@@ -23,7 +23,7 @@ spec:
           imagePullPolicy: Always
           name: plantao-frontend
           ports:
-            - containerPort: 5173
+            - containerPort: 80
       imagePullSecrets:
         - name: regcred
         - name: ocir

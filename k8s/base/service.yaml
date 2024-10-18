@@ -4,9 +4,9 @@ metadata:
   name: plantao-frontend
 spec:
   ports:
-    - name: '80'
+    - name: "80"
       port: 80
-      targetPort: 5173
+      targetPort: 80
   selector:
     run: plantao-frontend
 status:

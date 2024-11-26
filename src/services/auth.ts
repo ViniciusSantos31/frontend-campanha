@@ -68,18 +68,20 @@ async function refreshToken() {
     toast.error("Falha ao autenticar-se. Tente novamente.");
   }
 }
-
 async function loginAsGuest({
   firstName,
   lastName,
+  qrCodeId,
 }: {
   firstName: string;
   lastName: string;
+  qrCodeId?: string;
 }): Promise<LoginResponse | undefined> {
   try {
     const response = await api.post<LoginResponse>("/login/guest", {
       firstName,
       lastName,
+      qrCodeId,
     });
 
     cookie.set(null, "@campanha/auth", response.data.token, {
@@ -99,10 +101,27 @@ async function loginAsGuest({
   }
 }
 
+async function loginAsGuestUsingQRCode({
+  firstName,
+  lastName,
+  token,
+}: {
+  firstName: string;
+  lastName: string;
+  token: string;
+  }) {
+  console.log("loginAsGuestUsingQRCode", {
+    firstName,
+    lastName,
+    token,
+  });
+}
+
 async function logout() {
   await api.head("/logout");
   socket.disconnect();
   cookie.destroy(null, "@campanha/auth");
 }
 
-export { login, loginAsGuest, logout, refreshToken, registerUser };
+export { login, loginAsGuest, loginAsGuestUsingQRCode, logout, refreshToken, registerUser };
+

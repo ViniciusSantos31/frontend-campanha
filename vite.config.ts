@@ -16,6 +16,13 @@ export default defineConfig(({ mode }) => {
     },
     server: {
       port: env.VITE_PORT ? Number(env.VITE_PORT) : 5173,
+      proxy: {
+        "/api": {
+          target: env.VITE_BACKEND_URL,
+          changeOrigin: true,
+          rewrite: (path) => path.replace(/^\/api/, ""),
+        },
+      },
     },
   };
 });

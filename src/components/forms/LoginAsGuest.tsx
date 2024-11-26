@@ -9,6 +9,7 @@ import {
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
+import socket from "services/socket";
 
 export const LoginAsGuestForm: React.FC = () => {
   const navigate = useNavigate();
@@ -20,8 +21,13 @@ export const LoginAsGuestForm: React.FC = () => {
     defaultValues: {
       firstName: searchParams.get("fn") || "",
       lastName: searchParams.get("ln") || "",
+      qrCodeId: searchParams.get("qr") || undefined,
     },
   });
+
+  const token = searchParams.get("qr");
+
+  socket.emit("qr_code_accessed_on_page", token);
 
   const {
     control,
@@ -34,9 +40,10 @@ export const LoginAsGuestForm: React.FC = () => {
   useEffect(() => {
     const firstName = searchParams.get("fn");
     const lastName = searchParams.get("ln");
+    const qr = searchParams.get("qr") ?? undefined;
 
     if (firstName && lastName) {
-      guestLogin({ firstName, lastName });
+      guestLogin({ firstName, lastName, qrCodeId: qr });
     }
   }, [searchParams, guestLogin]);
 

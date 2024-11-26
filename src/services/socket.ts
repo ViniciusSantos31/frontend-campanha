@@ -11,7 +11,7 @@ const wsURL = ivDevMode ? "http://localhost:3333" : import.meta.env.VITE_WS_URL;
 
 const socket = io(wsURL, {
   transports: ["websocket"],
-  autoConnect: false,
+  autoConnect: true,
 });
 
 socket.on("connect", () => {
@@ -19,10 +19,10 @@ socket.on("connect", () => {
 });
 
 socket.on("new_connection", () => {
-  toast.info("Nova conexão", {
-    description: "Um novo usuário entrou no plantão.",
-    duration: 5000,
-  });
+  // toast.info("Nova conexão", {
+  //   description: "Um novo usuário entrou no plantão.",
+  //   duration: 5000,
+  // });
 });
 
 socket.on("user_login", () => {
@@ -43,7 +43,18 @@ socket.on("user_logout", () => {
 
 socket.on("user_status_changed", () => {
   queryClient.invalidateQueries({
-    queryKey: ["providers"],
+    predicate: (query) => { 
+      return query.queryKey.includes("providers") ||
+        query.queryKey.includes("queue");
+    },
+  });
+});
+
+socket.on("user_left_queue", () => { 
+  queryClient.invalidateQueries({
+    predicate: (query) => { 
+      return query.queryKey.includes("queue");
+    },
   });
 });
 
@@ -51,6 +62,12 @@ socket.on("new_user_in_queue", async () => {
   await me();
 
   const { user: currentUser } = useAuthStore.getState();
+
+  queryClient.invalidateQueries({
+    predicate: (query) => {
+      return query.queryKey.includes("queue");
+    },
+  })
 
   if (
     currentUser &&
@@ -65,10 +82,6 @@ socket.on(
   "conference_created",
   async ({ short, userToCall, providerToCall }) => {
     const { user } = useAuthStore.getState();
-
-    console.log("user", user?.id, "providerToCall", providerToCall.id);
-
-    console.log("conference_created", short, userToCall, providerToCall);
 
     if (user && user.id === providerToCall.id) {
       window.location.href = `/conference/${short}`;
@@ -92,6 +105,12 @@ socket.on(
         },
       });
     }
+
+    queryClient.invalidateQueries({
+      predicate: (query) => {
+        return query.queryKey.includes("queue");
+      },
+    });
   }
 );
 

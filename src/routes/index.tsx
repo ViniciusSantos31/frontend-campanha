@@ -3,6 +3,8 @@ import { LoginAsGuest } from "@pages/GuestLogin";
 import { Home } from "@pages/Home";
 import { Login } from "@pages/Login";
 import { NotFound } from "@pages/NotFound";
+import QueuePage from "@pages/Queue";
+import { QueuePageInfo } from "@pages/Queue/Info";
 import { RecoveryPassword } from "@pages/RecoveryPassword";
 import { ConfirmCode } from "@pages/RecoveryPassword/ConfirmCode";
 import { NewPassword } from "@pages/RecoveryPassword/NewPassword";
@@ -32,6 +34,14 @@ function Root() {
       <Route
         path="guest"
         element={<LoginAsGuest />}
+      />
+      <Route
+        path="/queue"
+        element={<QueuePage />}
+      />
+      <Route
+        path="/queue/info"
+        element={<QueuePageInfo />}
       />
       <Route
         caseSensitive

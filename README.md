@@ -24,7 +24,7 @@ export default {
     ecmaVersion: "latest",
     sourceType: "module",
     project: ["./tsconfig.json", "./tsconfig.node.json"],
-    tsconfigRootDir: __dirnameeee,
+    tsconfigRootDir: __dirname,
   },
 };
 ```

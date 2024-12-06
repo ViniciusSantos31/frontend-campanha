@@ -15,6 +15,7 @@ const pagesToIgnore = [
   "/recovery/request",
   "/recovery/confirm",
   "/recovery/password",
+  "/queue",
 ];
 
 export const api = axios.create({

@@ -36,7 +36,7 @@ function Root() {
         element={<LoginAsGuest />}
       />
       <Route
-        path="/queue"
+        path="queue"
         element={<QueuePage />}
       />
       <Route
